@@ -11,6 +11,7 @@ namespace TextBasedRPG
         public int x;
         public int y;
         public HealthSystem healthSystem;
+        //constructor
         public Player()
         {
             healthSystem = new HealthSystem(100);

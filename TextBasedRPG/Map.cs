@@ -8,5 +8,10 @@ namespace TextBasedRPG
 {
     internal class Map
     {
+        //constructor
+        public Map()
+        {
+            
+        }
     }
 }
