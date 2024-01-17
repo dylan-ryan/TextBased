@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coord2D.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="HealthSystem.cs" />
     <Compile Include="Map.cs" />
