@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
-    internal struct Coord2D
+    internal class Entity : GameObject
     {
-        public int x; 
-        public int y;
+        public HealthSystem healthSystem;
+        
     }
 }

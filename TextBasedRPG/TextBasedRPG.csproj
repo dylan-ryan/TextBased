@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Coord2D.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="HealthSystem.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Player.cs" />

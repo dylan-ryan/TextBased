@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
-    internal struct Coord2D
+    internal class GameObject
     {
-        public int x; 
-        public int y;
+        public Coord2D coord2D;
+        public GameObject() 
+        {
+        }
     }
 }

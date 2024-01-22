@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
-    internal class Enemy
+    internal class Enemy : Entity
     {
-        public int x;
-        public int y;
-        public HealthSystem healthSystem;
-        //constructor
+
         public Enemy()
         {
-            healthSystem = new HealthSystem(50);
+            coord2D = new Coord2D();
+            healthSystem = new HealthSystem(100);
+
+            coord2D.x = 10;
+            coord2D.y = 10;
         }
     }
 }
