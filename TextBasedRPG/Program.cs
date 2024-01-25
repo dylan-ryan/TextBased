@@ -14,10 +14,27 @@ namespace TextBasedRPG
         static void Main(string[] args)
         {
             Player player = new Player();
-           // Map map = new Map();
+            Enemy enemy = new Enemy();
+            Entity entity = new Entity();
+            Map map = new Map();
+            
             while (gameOver != true)
             {
+                entity.Input();
                 player.MoveTo();
+                enemy.SimpleAI();
+                
+                Console.SetCursorPosition(0,19);
+                Console.WriteLine("Health: " + player.healthSystem.health + " Enemy Health: " + enemy.healthSystem.health);
+            }
+            while (gameOver != false)
+            {
+                Console.Clear();
+                Console.WriteLine("Game Over");
+                Console.WriteLine();
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey(true);
+                break;
             }
         }
     }
