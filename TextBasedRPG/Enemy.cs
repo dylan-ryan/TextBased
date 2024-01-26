@@ -10,14 +10,15 @@ namespace TextBasedRPG
     {
         static char avatar = '$';
         static char blank = ' ';
-        Map qq11 = new Map();
-        Player player;
+        
+        //Player player;
         public Enemy()
         {
             player = new Player();
+            //player = new Player();
             coord2D = new Coord2D();
             healthSystem = new HealthSystem();
-            qq11 = new Map();
+            map = new Map();
             coord2D.x = 25;
             coord2D.y = 8;
             healthSystem.health = 3;
@@ -37,55 +38,72 @@ namespace TextBasedRPG
                 Console.SetCursorPosition(coord2D.x, coord2D.y);
                 Console.Write(blank);
                 //qq11 = new Map();
-
+                
                 if (player.coord2D.y > coord2D.y)
                 {
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(blank);
-                    coord2D.y = coord2D.y + 1;
-                    if (qq11.map[coord2D.x, coord2D.y] == '#')
+                        coord2D.y = coord2D.y + 1;
+                    if (player.coord2D.y != coord2D.y & player.coord2D.x != coord2D.x)
                     {
-                        coord2D.y = coord2D.y - 1;
+                        if (map.map[coord2D.x, coord2D.y] == '#')
+                        {
+                            coord2D.y = coord2D.y - 1;
+                        }
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
                     }
-                    Console.SetCursorPosition(coord2D.x, coord2D.y);
-                    Console.Write(avatar);
+                    else  Console.Write(avatar);
                 }
                 if (player.coord2D.x > coord2D.x)
                 {
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(blank);
-                    coord2D.x = coord2D.x + 1;
-                    if (qq11.map[coord2D.x, coord2D.y] == '#')
+                        coord2D.x = coord2D.x + 1;
+                    if (player.coord2D.x != coord2D.x & player.coord2D.y != coord2D.y)
                     {
-                        coord2D.x = coord2D.x - 1;
+                        if (map.map[coord2D.x, coord2D.y] == '#')
+                        {
+                            coord2D.x = coord2D.x - 1;
+                        }
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
                     }
-                    Console.SetCursorPosition(coord2D.x, coord2D.y);
-                    Console.Write(avatar);
+                    else Console.Write(avatar);
                 }
                 if (player.coord2D.x < coord2D.x)
                 {
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(blank);
-                    coord2D.x = coord2D.x - 1;
-                    if (qq11.map[coord2D.x, coord2D.y] == '#')
+                        coord2D.x = coord2D.x - 1;
+                    if (player.coord2D.x != coord2D.x & player.coord2D.y != coord2D.y)
                     {
-                        coord2D.x = coord2D.x + 1;
+                        if (map.map[coord2D.x, coord2D.y] == '#')
+                        {
+                            coord2D.x = coord2D.x + 1;
+                        }
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
                     }
-                    Console.SetCursorPosition(coord2D.x, coord2D.y);
-                    Console.Write(avatar);
+                    else  Console.Write(avatar);
                 }
                 if (player.coord2D.y < coord2D.y)
                 {
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(blank);
-                    coord2D.y = coord2D.y - 1;
-                    if (qq11.map[coord2D.x, coord2D.y] == '#')
+                        coord2D.y = coord2D.y - 1;
+                    if (player.coord2D.y != coord2D.y & player.coord2D.x != coord2D.x)
                     {
-                        coord2D.y = coord2D.y + 1;
+                        if (map.map[coord2D.x, coord2D.y] == '#')
+                        {
+                            coord2D.y = coord2D.y + 1;
+                        }
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
                     }
-                    Console.SetCursorPosition(coord2D.x, coord2D.y);
-                    Console.Write(avatar);
+                    else  Console.Write(avatar);
                 }
+                
                 //Console.SetCursorPosition(coord2D.x, coord2D.y);
                 //Console.Write(avatar);
             }

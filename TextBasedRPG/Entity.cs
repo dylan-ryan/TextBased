@@ -10,15 +10,15 @@ namespace TextBasedRPG
     {
         public static ConsoleKeyInfo input;
         public HealthSystem healthSystem;
+        public Player player;
+        public Enemy enemy;
          public Entity()
         {
-
         }
 
         public void Input()
         {
             input = Console.ReadKey(true);
-
         }
     }
 }
