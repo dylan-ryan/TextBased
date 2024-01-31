@@ -8,117 +8,148 @@ namespace TextBasedRPG
 {
     internal class Player : Entity
     {
-        //constructor
-        
         static char avatar = '@';
-                                   
-        //static ConsoleKeyInfo input;
-        //Enemy enemy;
-
+        static char blank = ' ';
+        private Enemy enemy;
         public Player()
         {
-            //enemy = new Enemy();
-            coord2D = new Coord2D();
-            healthSystem = new HealthSystem();
             map = new Map();
-            coord2D.x = 10;
+            healthSystem = new HealthSystem(3);
+            coord2D = new Coord2D();
             coord2D.y = 10;
-            healthSystem.health = 3;
+            coord2D.x = 10;
+        }
+
+        public void SetEnemy(Enemy enemy)
+        {
+            this.enemy = enemy;
         }
 
         public void MoveTo()
-        {
+        { 
+            ConsoleKeyInfo input = Console.ReadKey(true);
             Console.CursorVisible = false;
-            Console.SetCursorPosition(coord2D.x, coord2D.y);
-            Console.Write(avatar);
-            
 
+            int enemyX = enemy.coord2D.x;
+            int enemyY = enemy.coord2D.y;
+            int newX = coord2D.x;
+            int newY = coord2D.y;
+            Console.SetCursorPosition(coord2D.x, coord2D.y);
+            Console.Write(blank);
             if (input.Key == ConsoleKey.W || input.Key == ConsoleKey.UpArrow)
             {
+                newY--;
 
-                //if (map.map[coord2D.x, coord2D.y] != '$')
-                //{
-                map = new Map();
-                coord2D.y = coord2D.y - 1;
-                if (map.map[coord2D.x, coord2D.y] != '#')
+                if (newX == enemyX && enemyY == newY)
                 {
+                    newY++;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                    healthSystem.TakeDamage(1);
+                }
+                else if (newX != enemyX || enemyY != newY)
+                {
+
+                if (map.map[newX, newY] != '#')
+                {
+                    coord2D.y = newY;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
                 }
-                if (map.map[coord2D.x, coord2D.y] == '#' )
-                { 
-                    coord2D.y = coord2D.y + 1;
+                }
+                if (map.map[newX, newY] == '#')
+                {
+                    newY++;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
                 }
-                //}
             }
             if (input.Key == ConsoleKey.A || input.Key == ConsoleKey.LeftArrow)
             {
-               // if (map.map[coord2D.x, coord2D.y] != '$')
-                //{
-                    map = new Map();
-                    coord2D.x = coord2D.x - 1;
-                    if (map.map[coord2D.x, coord2D.y] != '#')
+                newX--;
+                if (newX == enemyX && enemyY == newY)
+                {
+                    newX++;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                    healthSystem.TakeDamage(1);
+                }
+                else if (newX != enemyX || enemyY != newY)
+                {
+                    if (map.map[newX, newY] != '#')
                     {
+                        coord2D.x = newX;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                    if (map.map[coord2D.x, coord2D.y] == '#')
-                    {
-                        coord2D.x = coord2D.x + 1;
-                        Console.SetCursorPosition(coord2D.x, coord2D.y);
-                        Console.Write(avatar);
-                    }
-                //}
+                }
+                if (map.map[newX, newY] == '#')
+                {
+                    newX++;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                }
             }
             if (input.Key == ConsoleKey.S || input.Key == ConsoleKey.DownArrow)
             {
-                //if (true)
-                //{
-                    map = new Map();
-                    coord2D.y = coord2D.y + 1;
-                    if (map.map[coord2D.x, coord2D.y] != '#')
+                newY++;
+                if (newX == enemyX && enemyY == newY)
+                {
+                    newY--;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                    healthSystem.TakeDamage(1);
+                }
+                else if (newX != enemyX || enemyY != newY)
+                {
+                    if (map.map[newX, newY] != '#')
                     {
+                        coord2D.y = newY;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                    if (map.map[coord2D.x, coord2D.y] == '#')
+                    if (map.map[newX, newY] == '#')
                     {
-                        coord2D.y = coord2D.y - 1;
+                        newY--;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                //}
+                }
             }
             if (input.Key == ConsoleKey.D || input.Key == ConsoleKey.RightArrow)
             {
-                //if (map.map[coord2D.x, coord2D.y] != '$')
-               // {
-                    map = new Map();
-                    coord2D.x = coord2D.x + 1;
-                    if (map.map[coord2D.x, coord2D.y] != '#')
+                newX++;
+                if (newX == enemyX && enemyY == newY)
+                {
+                    newX--;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                    healthSystem.TakeDamage(1);
+                }
+                else if (newX != enemyX || enemyY != newY)
+                {
+                    if (map.map[newX, newY] != '#')
                     {
+                        coord2D.x = newX;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                    if (map.map[coord2D.x, coord2D.y] == '#')
+                    if (map.map[newX, newY] == '#')
                     {
-                        coord2D.x = coord2D.x - 1;
+                        newX--;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                //}
+                }
             }
             if (map.map[coord2D.x, coord2D.y] == 'L')
             {
                 healthSystem.TakeDamage(1);
             }
-            if(healthSystem.health <= 0)
+            if (healthSystem.health <= 0)
             {
                 Program.gameOver = true;
             }
-
             
         }
     }

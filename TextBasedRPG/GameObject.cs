@@ -12,6 +12,7 @@ namespace TextBasedRPG
         public Coord2D coord2D;
         public GameObject() 
         {
+            
         }
     }
 }

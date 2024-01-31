@@ -8,17 +8,14 @@ namespace TextBasedRPG
 {
     internal class Entity : GameObject
     {
-        public static ConsoleKeyInfo input;
+        //public ConsoleKeyInfo input;
         public HealthSystem healthSystem;
-        public Player player;
-        public Enemy enemy;
-         public Entity()
+        public Entity()
         {
+            
         }
 
-        public void Input()
-        {
-            input = Console.ReadKey(true);
-        }
+
+
     }
 }

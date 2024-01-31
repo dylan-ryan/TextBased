@@ -9,23 +9,27 @@ namespace TextBasedRPG
 {
     internal class Program
     {
+        public ConsoleKeyInfo input;
         static public bool gameOver = false;
-        
+        static public bool gameWin = false;
+
         static void Main(string[] args)
         {
             Player player = new Player();
-            Enemy enemy = new Enemy();
-            Entity entity = new Entity();
-            Map map = new Map();
-            
+            Enemy enemy = new Enemy(player);
+            player.SetEnemy(enemy);
+
+
+
             while (gameOver != true)
             {
-                entity.Input();
                 player.MoveTo();
                 enemy.SimpleAI();
-                
-                Console.SetCursorPosition(0,19);
+
+                Console.SetCursorPosition(0, 19);
+                Console.SetCursorPosition(0,20);
                 Console.WriteLine("Health: " + player.healthSystem.health + " Enemy Health: " + enemy.healthSystem.health);
+
             }
             while (gameOver != false)
             {
@@ -36,6 +40,8 @@ namespace TextBasedRPG
                 Console.ReadKey(true);
                 break;
             }
+
         }
+
     }
 }

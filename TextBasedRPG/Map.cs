@@ -19,7 +19,7 @@ namespace TextBasedRPG
             int height = MapRows.Length;
             map = new char[width, height];
 
-            Console.SetCursorPosition(0, 0);
+            Console.SetCursorPosition(0,0);
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)

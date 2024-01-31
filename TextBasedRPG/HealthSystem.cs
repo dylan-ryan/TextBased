@@ -10,11 +10,9 @@ namespace TextBasedRPG
     {
         public int health;
 
-        //constructor
-        public HealthSystem()
+        public HealthSystem(int health)
         {
-            //this.health = health;
-
+            this.health = health;
         }
         public void TakeDamage(int hp)
         {
