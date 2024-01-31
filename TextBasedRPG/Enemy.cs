@@ -21,16 +21,18 @@ namespace TextBasedRPG
             coord2D.y = 8;
         }
 
-        public void SimpleAI()
+        public void SimpleAI(ConsoleKeyInfo input)
         {
             
-            ConsoleKeyInfo input = Console.ReadKey(true);
+            //ConsoleKeyInfo input = Console.ReadKey(true);
             
             int playerX = player.coord2D.x;
             int playerY = player.coord2D.y;
             int newX = coord2D.x;
             int newY = coord2D.y;
-            
+            if(healthSystem.health > 0)
+            {
+
             if (input.Key == ConsoleKey.W || input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.A || input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.S || input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.D || input.Key == ConsoleKey.RightArrow)
             {
                 if (playerY > newY)
@@ -41,7 +43,8 @@ namespace TextBasedRPG
                         newY--;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
-                    }
+                            player.healthSystem.TakeDamage(1);
+                        }
                     else if (newX != playerX || playerY != newY)
                     {
                         if (map.map[newX, newY] != '#')
@@ -69,7 +72,7 @@ namespace TextBasedRPG
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
 
-                        healthSystem.TakeDamage(1);
+                        player.healthSystem.TakeDamage(1);
                     }
                     else if (newX != playerX || playerY != newY)
                     {
@@ -99,7 +102,7 @@ namespace TextBasedRPG
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
 
-                        healthSystem.TakeDamage(1);
+                        player.healthSystem.TakeDamage(1);
                     }
                     else if (newX != playerX || playerY != newY)
                     {
@@ -128,7 +131,7 @@ namespace TextBasedRPG
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
 
-                        healthSystem.TakeDamage(1);
+                        player.healthSystem.TakeDamage(1);
                     }
                     else if (newX != playerX || playerY != newY)
                     {
@@ -150,6 +153,7 @@ namespace TextBasedRPG
                         Console.Write(avatar);
                     }
                 }
+            }
             }
         }
     }

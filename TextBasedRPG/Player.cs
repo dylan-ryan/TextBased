@@ -25,9 +25,9 @@ namespace TextBasedRPG
             this.enemy = enemy;
         }
 
-        public void MoveTo()
+        public void MoveTo(ConsoleKeyInfo input)
         { 
-            ConsoleKeyInfo input = Console.ReadKey(true);
+            //ConsoleKeyInfo input = Console.ReadKey(true);
             Console.CursorVisible = false;
 
             int enemyX = enemy.coord2D.x;
@@ -40,14 +40,25 @@ namespace TextBasedRPG
             {
                 newY--;
 
-                if (newX == enemyX && enemyY == newY)
+                if (newX == enemyX && enemyY == newY )
                 {
-                    newY++;
-                    Console.SetCursorPosition(coord2D.x, coord2D.y);
-                    Console.Write(avatar);
-                    healthSystem.TakeDamage(1);
+
+                    if (enemy.healthSystem.health > 0)
+                    {
+                        newY++;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                        enemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.y = newY;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
+
                 }
-                else if (newX != enemyX || enemyY != newY)
+                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health > 0)
                 {
 
                 if (map.map[newX, newY] != '#')
@@ -69,12 +80,21 @@ namespace TextBasedRPG
                 newX--;
                 if (newX == enemyX && enemyY == newY)
                 {
+                    if (enemy.healthSystem.health > 0)
+                    {
                     newX++;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                    healthSystem.TakeDamage(1);
+                        enemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.x = newX;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
                 }
-                else if (newX != enemyX || enemyY != newY)
+                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health == 0)
                 {
                     if (map.map[newX, newY] != '#')
                     {
@@ -95,12 +115,21 @@ namespace TextBasedRPG
                 newY++;
                 if (newX == enemyX && enemyY == newY)
                 {
+                    if (enemy.healthSystem.health > 0)
+                    {
                     newY--;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                    healthSystem.TakeDamage(1);
+                        enemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.y = newY;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
                 }
-                else if (newX != enemyX || enemyY != newY)
+                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health == 0)
                 {
                     if (map.map[newX, newY] != '#')
                     {
@@ -121,12 +150,21 @@ namespace TextBasedRPG
                 newX++;
                 if (newX == enemyX && enemyY == newY)
                 {
+                    if (enemy.healthSystem.health > 0)
+                    {
                     newX--;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                    healthSystem.TakeDamage(1);
+                        enemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.x = newX;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
                 }
-                else if (newX != enemyX || enemyY != newY)
+                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health == 0)
                 {
                     if (map.map[newX, newY] != '#')
                     {

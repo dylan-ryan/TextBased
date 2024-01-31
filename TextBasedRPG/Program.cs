@@ -9,22 +9,24 @@ namespace TextBasedRPG
 {
     internal class Program
     {
-        public ConsoleKeyInfo input;
         static public bool gameOver = false;
         static public bool gameWin = false;
+           private static ConsoleKeyInfo input;
 
         static void Main(string[] args)
         {
             Player player = new Player();
             Enemy enemy = new Enemy(player);
             player.SetEnemy(enemy);
+            
 
 
 
             while (gameOver != true)
             {
-                player.MoveTo();
-                enemy.SimpleAI();
+                Input();
+                player.MoveTo(input);
+                enemy.SimpleAI(input);
 
                 Console.SetCursorPosition(0, 19);
                 Console.SetCursorPosition(0,20);
@@ -41,6 +43,11 @@ namespace TextBasedRPG
                 break;
             }
 
+        }
+
+        public static void Input()
+        {
+            input = Console.ReadKey(true);
         }
 
     }
