@@ -46,6 +46,7 @@
     <Compile Include="Coord2D.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="HealthSystem.cs" />
     <Compile Include="Map.cs" />

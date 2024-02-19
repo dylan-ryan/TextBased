@@ -186,7 +186,7 @@ namespace TextBasedRPG
             }
             if (healthSystem.health <= 0)
             {
-                Program.gameOver = true;
+                GameManager.gameOver = true;
             }
             
         }
