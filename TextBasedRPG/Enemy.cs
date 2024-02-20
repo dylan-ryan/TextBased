@@ -32,7 +32,6 @@ namespace TextBasedRPG
             int newY = coord2D.y;
             if(healthSystem.health > 0)
             {
-
             if (input.Key == ConsoleKey.W || input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.A || input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.S || input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.D || input.Key == ConsoleKey.RightArrow)
             {
                 if (playerY > newY)

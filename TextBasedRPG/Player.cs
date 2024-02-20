@@ -36,6 +36,10 @@ namespace TextBasedRPG
 
             int enemyX = enemy.coord2D.x;
             int enemyY = enemy.coord2D.y;
+            int sEnemyX = scaredEnemy.coord2D.x;
+            int sEnemyY = scaredEnemy.coord2D.y;
+            int rEnemyX = randomEnemy.coord2D.x;
+            int rEnemyY = randomEnemy.coord2D.y;
             int newX = coord2D.x;
             int newY = coord2D.y;
             Console.SetCursorPosition(coord2D.x, coord2D.y);
@@ -60,9 +64,44 @@ namespace TextBasedRPG
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-
                 }
-                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health > 0)
+                if (newX == sEnemyX && sEnemyY == newY )
+                {
+
+                    if (scaredEnemy.healthSystem.health > 0)
+                    {
+                        newY++;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                        scaredEnemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.y = newY;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
+                }  
+                if (newX == rEnemyX && rEnemyY == newY )
+                {
+
+                    if (randomEnemy.healthSystem.health > 0)
+                    {
+                        newY++;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                        randomEnemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.y = newY;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
+                }
+                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health > 0 ||
+                    newX != sEnemyX || sEnemyY != newY || scaredEnemy.healthSystem.health > 0 ||
+                    newX != rEnemyX || rEnemyY != newY || randomEnemy.healthSystem.health > 0)
                 {
 
                 if (map.map[newX, newY] != '#')
@@ -98,7 +137,41 @@ namespace TextBasedRPG
                         Console.Write(avatar);
                     }
                 }
-                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health == 0)
+                if (newX == sEnemyX && sEnemyY == newY)
+                {
+                    if (scaredEnemy.healthSystem.health > 0)
+                    {
+                    newX++;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                        scaredEnemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.x = newX;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
+                }  
+                if (newX == rEnemyX && rEnemyY == newY)
+                {
+                    if (randomEnemy.healthSystem.health > 0)
+                    {
+                    newX++;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                        randomEnemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.x = newX;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
+                }
+                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health > 0 ||
+                    newX != sEnemyX || sEnemyY != newY || scaredEnemy.healthSystem.health > 0 ||
+                    newX != rEnemyX || rEnemyY != newY || randomEnemy.healthSystem.health > 0)
                 {
                     if (map.map[newX, newY] != '#')
                     {
@@ -132,8 +205,42 @@ namespace TextBasedRPG
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
+                } 
+                if (newX == sEnemyX && sEnemyY == newY)
+                {
+                    if (scaredEnemy.healthSystem.health > 0)
+                    {
+                    newY--;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                        scaredEnemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.y = newY;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
+                } 
+                if (newX == rEnemyX && rEnemyY == newY)
+                {
+                    if (randomEnemy.healthSystem.health > 0)
+                    {
+                    newY--;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                        randomEnemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.y = newY;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
                 }
-                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health == 0)
+                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health > 0 ||
+                    newX != sEnemyX || sEnemyY != newY || scaredEnemy.healthSystem.health > 0 ||
+                    newX != rEnemyX || rEnemyY != newY || randomEnemy.healthSystem.health > 0)
                 {
                     if (map.map[newX, newY] != '#')
                     {
@@ -167,8 +274,42 @@ namespace TextBasedRPG
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
+                } 
+                if (newX == sEnemyX && sEnemyY == newY)
+                {
+                    if (scaredEnemy.healthSystem.health > 0)
+                    {
+                    newX--;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                        scaredEnemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.x = newX;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
                 }
-                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health == 0)
+                if (newX == rEnemyX && rEnemyY == newY)
+                {
+                    if (randomEnemy.healthSystem.health > 0)
+                    {
+                    newX--;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
+                        randomEnemy.healthSystem.TakeDamage(1);
+                    }
+                    else
+                    {
+                        coord2D.x = newX;
+                        Console.SetCursorPosition(coord2D.x, coord2D.y);
+                        Console.Write(avatar);
+                    }
+                }
+                else if (newX != enemyX || enemyY != newY || enemy.healthSystem.health > 0 ||
+                    newX != sEnemyX || sEnemyY != newY || scaredEnemy.healthSystem.health > 0 ||
+                    newX != rEnemyX || rEnemyY != newY || randomEnemy.healthSystem.health > 0)
                 {
                     if (map.map[newX, newY] != '#')
                     {

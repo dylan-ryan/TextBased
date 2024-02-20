@@ -29,6 +29,8 @@ namespace TextBasedRPG
                 Input();
                 player.MoveTo(input);
                 enemy.SimpleAI(input);
+                scaredEnemy.SimpleAI(input);
+                randomEnemy.SimpleAI();
 
                 Console.SetCursorPosition(0, 19);
                 Console.SetCursorPosition(0, 20);
