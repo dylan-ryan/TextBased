@@ -65,6 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="map.txt" />
+    <Content Include="map2.txt" />
+    <Content Include="map3.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

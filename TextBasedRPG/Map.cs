@@ -9,12 +9,12 @@ namespace TextBasedRPG
 {
     internal class Map
     {
-            string path = @"map.txt";
+            string map1 = @"map.txt";
             string[] MapRows;
             public char[,] map;
         public Map()
         {
-            MapRows= File.ReadAllLines(path);
+            MapRows= File.ReadAllLines(map1);
             int width = MapRows[0].Length;
             int height = MapRows.Length;
             map = new char[width, height];
