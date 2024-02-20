@@ -8,19 +8,21 @@ namespace TextBasedRPG
 {
     internal class GameManager
     {
-        static public bool gameOver = false;
-        static public bool gameWin = false;
-        private static ConsoleKeyInfo input;
-            public static void Input()
-            {
-                input = Console.ReadKey(true);
-            }
+         static public bool gameOver = false;
+         static public bool gameWin = false;
+         private static ConsoleKeyInfo input;
+         public static void Input()
+         {
+            input = Console.ReadKey(true);
+         }
 
         public void Play()
         {
             Player player = new Player();
+            ScaredEnemy scaredEnemy = new ScaredEnemy(player);
+            RandomEnemy randomEnemy = new RandomEnemy(player);
             Enemy enemy = new Enemy(player);
-            player.SetEnemy(enemy);
+            player.SetEnemy(enemy,scaredEnemy,randomEnemy);
 
             while (gameOver != true)
             {

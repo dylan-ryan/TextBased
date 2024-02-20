@@ -11,6 +11,8 @@ namespace TextBasedRPG
         static char avatar = '@';
         static char blank = ' ';
         private Enemy enemy;
+        private ScaredEnemy scaredEnemy;
+        private RandomEnemy randomEnemy;
         public Player()
         {
             map = new Map();
@@ -20,8 +22,10 @@ namespace TextBasedRPG
             coord2D.x = 10;
         }
 
-        public void SetEnemy(Enemy enemy)
+        public void SetEnemy(Enemy enemy,ScaredEnemy scaredEnemy,RandomEnemy randomEnemy)
         {
+            this.scaredEnemy = scaredEnemy;
+            this.randomEnemy = randomEnemy;
             this.enemy = enemy;
         }
 
