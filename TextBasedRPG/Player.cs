@@ -8,11 +8,16 @@ namespace TextBasedRPG
 {
     internal class Player : Entity
     {
-        static char avatar = '@';
-        static char blank = ' ';
+        private static char avatar = '@';
+        private static char blank = ' ';
         private Enemy enemy;
         private ScaredEnemy scaredEnemy;
         private RandomEnemy randomEnemy;
+        private Sword equippedSword = new Sword();
+        public Shield equippedShield = new Shield();
+        bool swordEquipped = false;
+        public bool shieldEquipped = false;
+
         public Player()
         {
             map = new Map();
@@ -22,18 +27,26 @@ namespace TextBasedRPG
             coord2D.x = 10;
         }
 
-        public void SetEnemy(Enemy enemy,ScaredEnemy scaredEnemy,RandomEnemy randomEnemy)
+        public void EquipSword()
+        {
+            equippedSword = new Sword();
+        }
+        public void EquipShield()
+        {
+            equippedShield = new Shield();
+        }
+
+        public void SetEnemy(Enemy enemy, ScaredEnemy scaredEnemy, RandomEnemy randomEnemy)
         {
             this.scaredEnemy = scaredEnemy;
             this.randomEnemy = randomEnemy;
             this.enemy = enemy;
         }
+        
 
         public void MoveTo(ConsoleKeyInfo input)
-        { 
-            //ConsoleKeyInfo input = Console.ReadKey(true);
+        {
             Console.CursorVisible = false;
-
             int enemyX = enemy.coord2D.x;
             int enemyY = enemy.coord2D.y;
             int sEnemyX = scaredEnemy.coord2D.x;
@@ -44,6 +57,8 @@ namespace TextBasedRPG
             int newY = coord2D.y;
             Console.SetCursorPosition(coord2D.x, coord2D.y);
             Console.Write(blank);
+            int totalDamage = 1 + (swordEquipped ? equippedSword.DamageBonus : 0);
+
             if (input.Key == ConsoleKey.W || input.Key == ConsoleKey.UpArrow)
             {
                 newY--;
@@ -56,7 +71,7 @@ namespace TextBasedRPG
                         newY++;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
-                        enemy.healthSystem.TakeDamage(1);
+                        enemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -73,7 +88,7 @@ namespace TextBasedRPG
                         newY++;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
-                        scaredEnemy.healthSystem.TakeDamage(1);
+                        scaredEnemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -90,7 +105,7 @@ namespace TextBasedRPG
                         newY++;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
-                        randomEnemy.healthSystem.TakeDamage(1);
+                        randomEnemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -103,7 +118,6 @@ namespace TextBasedRPG
                     newX != sEnemyX || sEnemyY != newY || scaredEnemy.healthSystem.health > 0 ||
                     newX != rEnemyX || rEnemyY != newY || randomEnemy.healthSystem.health > 0)
                 {
-
                 if (map.map[newX, newY] != '#')
                 {
                     coord2D.y = newY;
@@ -117,6 +131,7 @@ namespace TextBasedRPG
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
                 }
+
             }
             if (input.Key == ConsoleKey.A || input.Key == ConsoleKey.LeftArrow)
             {
@@ -128,7 +143,7 @@ namespace TextBasedRPG
                     newX++;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        enemy.healthSystem.TakeDamage(1);
+                        enemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -144,7 +159,7 @@ namespace TextBasedRPG
                     newX++;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        scaredEnemy.healthSystem.TakeDamage(1);
+                        scaredEnemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -160,7 +175,7 @@ namespace TextBasedRPG
                     newX++;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        randomEnemy.healthSystem.TakeDamage(1);
+                        randomEnemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -197,7 +212,7 @@ namespace TextBasedRPG
                     newY--;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        enemy.healthSystem.TakeDamage(1);
+                        enemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -213,7 +228,7 @@ namespace TextBasedRPG
                     newY--;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        scaredEnemy.healthSystem.TakeDamage(1);
+                        scaredEnemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -229,7 +244,7 @@ namespace TextBasedRPG
                     newY--;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        randomEnemy.healthSystem.TakeDamage(1);
+                        randomEnemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -248,13 +263,13 @@ namespace TextBasedRPG
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                    if (map.map[newX, newY] == '#')
+                }
+                if (map.map[newX, newY] == '#')
                     {
                         newY--;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                }
             }
             if (input.Key == ConsoleKey.D || input.Key == ConsoleKey.RightArrow)
             {
@@ -266,7 +281,7 @@ namespace TextBasedRPG
                     newX--;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        enemy.healthSystem.TakeDamage(1);
+                        enemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -282,7 +297,7 @@ namespace TextBasedRPG
                     newX--;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        scaredEnemy.healthSystem.TakeDamage(1);
+                        scaredEnemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -298,7 +313,7 @@ namespace TextBasedRPG
                     newX--;
                     Console.SetCursorPosition(coord2D.x, coord2D.y);
                     Console.Write(avatar);
-                        randomEnemy.healthSystem.TakeDamage(1);
+                        randomEnemy.healthSystem.TakeDamage(totalDamage);
                     }
                     else
                     {
@@ -317,13 +332,24 @@ namespace TextBasedRPG
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                    if (map.map[newX, newY] == '#')
+                }
+                if (map.map[newX, newY] == '#')
                     {
                         newX--;
                         Console.SetCursorPosition(coord2D.x, coord2D.y);
                         Console.Write(avatar);
                     }
-                }
+                
+            }
+            if (coord2D.x == equippedSword.coord2D.x && coord2D.y == equippedSword.coord2D.y)
+            {
+                swordEquipped = true;
+                equippedSword.PickUp(this);
+            }
+            if (coord2D.x == equippedShield.coord2D.x && coord2D.y == equippedShield.coord2D.y)
+            {
+                shieldEquipped = true;
+                equippedShield.PickUp(this);
             }
             if (map.map[coord2D.x, coord2D.y] == 'L')
             {
@@ -333,7 +359,6 @@ namespace TextBasedRPG
             {
                 GameManager.gameOver = true;
             }
-            
         }
     }
 }

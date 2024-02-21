@@ -23,9 +23,6 @@ namespace TextBasedRPG
 
         public void SimpleAI(ConsoleKeyInfo input)
         {
-
-            //ConsoleKeyInfo input = Console.ReadKey(true);
-
             int playerX = player.coord2D.x;
             int playerY = player.coord2D.y;
             int newX = coord2D.x;

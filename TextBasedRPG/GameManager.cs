@@ -22,11 +22,15 @@ namespace TextBasedRPG
             ScaredEnemy scaredEnemy = new ScaredEnemy(player);
             RandomEnemy randomEnemy = new RandomEnemy(player);
             Enemy enemy = new Enemy(player);
+            Sword sword = new Sword();
+            Shield shield = new Shield();
             player.SetEnemy(enemy,scaredEnemy,randomEnemy);
 
             while (gameOver != true)
             {
                 Input();
+                sword.Update(input);
+                shield.Update(input);
                 player.MoveTo(input);
                 enemy.SimpleAI(input);
                 scaredEnemy.SimpleAI(input);
