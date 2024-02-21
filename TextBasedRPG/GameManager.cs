@@ -24,6 +24,7 @@ namespace TextBasedRPG
             Enemy enemy = new Enemy(player);
             Sword sword = new Sword();
             Shield shield = new Shield();
+            HealingPotion healingPotion = new HealingPotion();
             player.SetEnemy(enemy,scaredEnemy,randomEnemy);
 
             while (gameOver != true)
@@ -31,6 +32,7 @@ namespace TextBasedRPG
                 Input();
                 sword.Update(input);
                 shield.Update(input);
+                healingPotion.Update(input);
                 player.MoveTo(input);
                 enemy.SimpleAI(input);
                 scaredEnemy.SimpleAI(input);

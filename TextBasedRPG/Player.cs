@@ -15,6 +15,7 @@ namespace TextBasedRPG
         private RandomEnemy randomEnemy;
         private Sword equippedSword = new Sword();
         public Shield equippedShield = new Shield();
+        public HealingPotion healingPotion = new HealingPotion();
         bool swordEquipped = false;
         public bool shieldEquipped = false;
 
@@ -34,6 +35,10 @@ namespace TextBasedRPG
         public void EquipShield()
         {
             equippedShield = new Shield();
+        }
+        public void UseHealthPotion()
+        {
+            healthSystem.health += healingPotion.HealAmount;
         }
 
         public void SetEnemy(Enemy enemy, ScaredEnemy scaredEnemy, RandomEnemy randomEnemy)
@@ -345,6 +350,10 @@ namespace TextBasedRPG
             {
                 swordEquipped = true;
                 equippedSword.PickUp(this);
+            }
+            if (coord2D.x == healingPotion.coord2D.x && coord2D.y == healingPotion.coord2D.y)
+            {
+                healingPotion.PickUp(this);
             }
             if (coord2D.x == equippedShield.coord2D.x && coord2D.y == equippedShield.coord2D.y)
             {
