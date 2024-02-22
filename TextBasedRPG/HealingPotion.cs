@@ -16,8 +16,8 @@ namespace TextBasedRPG
         bool delete = false;
         public HealingPotion(Map map)
         {
-            coord2D.y = 6;
-            coord2D.x = 8;
+            coord2D.y = 13;
+            coord2D.x = 54;
         }
         public void Update(ConsoleKeyInfo input)
         {

@@ -17,8 +17,8 @@ namespace TextBasedRPG
 
         public Shield(Map map)
         {
-            coord2D.y = 6;
-            coord2D.x = 12;
+            coord2D.y = 4;
+            coord2D.x = 30;
         }
         public void Update(ConsoleKeyInfo input)
         {

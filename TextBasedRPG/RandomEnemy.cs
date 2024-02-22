@@ -57,6 +57,10 @@ namespace TextBasedRPG
                         Console.Write(avatar);
                     }
                 }
+                if (newX == player.coord2D.x && newY == player.coord2D.y)
+                {
+                    player.healthSystem.TakeDamage(1);
+                }
             }
         }
     }

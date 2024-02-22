@@ -15,8 +15,8 @@ namespace TextBasedRPG
         bool delete = false;
         public Sword(Map map)
         {
-            coord2D.y = 6;
-            coord2D.x = 10;
+            coord2D.y = 3;
+            coord2D.x = 6;
         }
         public void Update(ConsoleKeyInfo input)
         {
