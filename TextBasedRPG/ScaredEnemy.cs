@@ -14,7 +14,7 @@ namespace TextBasedRPG
         public ScaredEnemy(Player player)
         {
             this.player = player;
-            map = new Map();
+            map = new Map(player);
             healthSystem = new HealthSystem(2);
             coord2D = new Coord2D();
             coord2D.x = 25;

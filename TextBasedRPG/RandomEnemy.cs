@@ -11,18 +11,33 @@ namespace TextBasedRPG
         static char avatar = '%';
         static char blank = ' ';
         private Player player;
+        private bool isSpawned = false;
+
+        public bool IsSpawned
+        {
+            get { return isSpawned; }
+        }
+
         public RandomEnemy(Player player)
         {
             this.player = player;
-            map = new Map();
+            map = new Map(player);
             healthSystem = new HealthSystem(2);
             coord2D = new Coord2D();
             coord2D.x = 25;
             coord2D.y = 8;
         }
+
+        public void Spawn()
+        {
+            Console.SetCursorPosition(coord2D.x, coord2D.y);
+            Console.Write(avatar);
+            isSpawned = true;
+        }
+
         public void SimpleAI()
         {
-            if (healthSystem.health > 0)
+            if (isSpawned && healthSystem.health > 0)
             {
                 int[] directions = { -1, 0, 1, 0, 0, -1, 0, 1 };
                 int randomIndex = new Random().Next(0, directions.Length / 2) * 2;
