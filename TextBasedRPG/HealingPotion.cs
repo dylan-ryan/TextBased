@@ -12,6 +12,7 @@ namespace TextBasedRPG
         private static char avatar = 'H';
         private Player player;
         private int healAmount = 5;
+        private bool pickedUp = false;
         bool delete = false;
         public HealingPotion(Map map)
         {
@@ -37,13 +38,12 @@ namespace TextBasedRPG
         }
         public void PickUp(Player player)
         {
-            if (map.CurrentMapPath == map.map2)
+            if (!pickedUp && map.CurrentMapPath == map.map2)
             {
                 if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
                 {
                     player.UseHealthPotion();
-                    Console.SetCursorPosition(0, 23);
-                    Console.WriteLine("You picked up a potion! Health +5");
+                    pickedUp = true;
                     delete = true;
                 }
             }

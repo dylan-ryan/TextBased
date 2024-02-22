@@ -30,7 +30,7 @@ namespace TextBasedRPG
             ScaredEnemy scaredEnemy = new ScaredEnemy(player);
             Shield shield = new Shield(map);
             HealingPotion healingPotion = new HealingPotion(map);
-            hud = new HUD(player, enemy, scaredEnemy,randomEnemy);
+            hud = new HUD(player, enemy, scaredEnemy,randomEnemy,shield,map,healingPotion,sword);
             player.SetEnemy(enemy, scaredEnemy, randomEnemy);
 
             while (!gameOver)

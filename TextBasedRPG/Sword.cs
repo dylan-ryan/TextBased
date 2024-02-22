@@ -11,12 +11,12 @@ namespace TextBasedRPG
         private static char avatar = '/';
         private Player player;
         private int damageBonus = 1;
+        private bool pickedUp = false;
         bool delete = false;
         public Sword(Map map)
         {
             coord2D.y = 6;
             coord2D.x = 10;
-
         }
         public void Update(ConsoleKeyInfo input)
         {
@@ -30,8 +30,6 @@ namespace TextBasedRPG
                 Console.SetCursorPosition(coord2D.x, coord2D.y);
                 Console.Write(' ');
             }
-
-
         }
         public int DamageBonus
         {
@@ -39,19 +37,16 @@ namespace TextBasedRPG
         }
         public void PickUp(Player player)
         {
-            if (map.CurrentMapPath == map.map1)
+            if (!pickedUp && map.CurrentMapPath == map.map1)
             {
                 if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
                 {
                     player.EquipSword();
-                    Console.SetCursorPosition(0, 21);
-                    Console.WriteLine("You picked up a sword! Damage +1");
                     delete = true;
+                    pickedUp = true;
                 }
             }
-            else return;
         }
-
         public static char Avatar => avatar;
     }
 }

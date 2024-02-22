@@ -12,6 +12,7 @@ namespace TextBasedRPG
         private static char avatar = '0';
         private Player player;
         private int shieldBonus = -1;
+        private bool pickedUp = false;
         bool delete = false;
 
         public Shield(Map map)
@@ -40,13 +41,12 @@ namespace TextBasedRPG
         public void PickUp(Player player)
         {
             //new Map(player);
-            if (map.CurrentMapPath == map.map3)
+            if (!pickedUp && map.CurrentMapPath == map.map3)
             {
                 if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
                 {
                     player.EquipShield();
-                    Console.SetCursorPosition(0, 22);
-                    Console.WriteLine("You picked up a shield! Enemy damage -1");
+                    pickedUp = true;
                 }
             }
 

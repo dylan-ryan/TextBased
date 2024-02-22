@@ -22,10 +22,10 @@ namespace TextBasedRPG
         {
             this.player = player;
             map = new Map(player);
-            healthSystem = new HealthSystem(2);
+            healthSystem = new HealthSystem(5);
             coord2D = new Coord2D();
-            coord2D.x = 25;
-            coord2D.y = 8;
+            coord2D.x = 59;
+            coord2D.y = 10;
         }
 
         public void Spawn()

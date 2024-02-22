@@ -16,10 +16,10 @@ namespace TextBasedRPG
         {
             this.player = player;
             map = new Map(player);
-            healthSystem = new HealthSystem(2);
+            healthSystem = new HealthSystem(5);
             coord2D = new Coord2D();
-            coord2D.x = 25;
-            coord2D.y = 8;
+            coord2D.x = 60;
+            coord2D.y = 10;
         }
 
         public void SimpleAI(ConsoleKeyInfo input)
@@ -31,7 +31,7 @@ namespace TextBasedRPG
             int playerY = player.coord2D.y;
             int newX = coord2D.x;
             int newY = coord2D.y;
-            int totalDamage = 1 + (player.shieldEquipped ? player.equippedShield.ShieldBonus : 0);
+            int totalDamage = 3 + (player.shieldEquipped ? player.equippedShield.ShieldBonus : 0);
             if (healthSystem.health > 0)
             {
             if (input.Key == ConsoleKey.W || input.Key == ConsoleKey.UpArrow || input.Key == ConsoleKey.A || input.Key == ConsoleKey.LeftArrow || input.Key == ConsoleKey.S || input.Key == ConsoleKey.DownArrow || input.Key == ConsoleKey.D || input.Key == ConsoleKey.RightArrow)
