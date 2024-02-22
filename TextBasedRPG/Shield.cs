@@ -14,7 +14,7 @@ namespace TextBasedRPG
         private int shieldBonus = -1;
         bool delete = false;
 
-        public Shield()
+        public Shield(Map map)
         {
             coord2D.y = 6;
             coord2D.x = 12;
@@ -39,12 +39,17 @@ namespace TextBasedRPG
 
         public void PickUp(Player player)
         {
-            if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
+            //new Map(player);
+            if (map.CurrentMapPath == map.map3)
             {
-                player.EquipShield();
-                Console.SetCursorPosition(0, 22);
-                Console.WriteLine("You picked up a shield! Enemy damage -1");
+                if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
+                {
+                    player.EquipShield();
+                    Console.SetCursorPosition(0, 22);
+                    Console.WriteLine("You picked up a shield! Enemy damage -1");
+                }
             }
+
         }
         public static char Avatar => avatar;
     }

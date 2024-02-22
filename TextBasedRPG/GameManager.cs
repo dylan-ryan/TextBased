@@ -8,60 +8,58 @@ namespace TextBasedRPG
 {
     internal class GameManager
     {
-         static public bool gameOver = false;
-         static public bool gameWin = false;
-         private static ConsoleKeyInfo input;
-        private static Player player;
+        static public bool gameOver = false;
+        static public bool gameWin = false;
+        private static ConsoleKeyInfo input;
+        public static Player player;
+        public static Enemy enemy;
         private static Map map;
-         public static void Input()
-         {
+        HUD hud;
+        public static void Input()
+        {
             input = Console.ReadKey(true);
-         }
+        }
 
         public void Play()
         {
             player = new Player();
             map = new Map(player);
-
-
             RandomEnemy randomEnemy = new RandomEnemy(player);
-            Enemy enemy = new Enemy(player);
-            Sword sword = new Sword();
+            enemy = new Enemy(player);
+            Sword sword = new Sword(map);
             ScaredEnemy scaredEnemy = new ScaredEnemy(player);
-            Shield shield = new Shield();
-            HealingPotion healingPotion = new HealingPotion();
-            player.SetEnemy(enemy,scaredEnemy,randomEnemy);
+            Shield shield = new Shield(map);
+            HealingPotion healingPotion = new HealingPotion(map);
+            hud = new HUD(player, enemy, scaredEnemy,randomEnemy);
+            player.SetEnemy(enemy, scaredEnemy, randomEnemy);
 
             while (!gameOver)
             {
                 Input();
-                sword.Update(input);
-                shield.Update(input);
-                healingPotion.Update(input);
                 player.MoveTo(input);
-                scaredEnemy.SimpleAI(input);
                 CheckMapSwitch();
-
-
-
-                if (map.CurrentMapPath == map.map2 && !randomEnemy.IsSpawned)
+                if (map.CurrentMapPath == map.map1)
+                {
+                    scaredEnemy.SimpleAI(input);
+                    sword.Update(input);
+                    hud.Display();
+                }
+                if (map.CurrentMapPath == map.map2)
                 {
                     randomEnemy.Spawn();
-                }
-
-                if (randomEnemy.IsSpawned)
-                {
                     randomEnemy.SimpleAI();
+                    healingPotion.Update(input);
+                    hud.Display();
                 }
-
                 if (map.CurrentMapPath == map.map3)
                 {
                     enemy.SimpleAI(input);
+                    shield.Update(input);
+                    hud.Display();
                 }
-
                 Console.SetCursorPosition(0, 19);
                 Console.SetCursorPosition(0, 20);
-                Console.WriteLine("Health: " + player.healthSystem.health + " Enemy Health: " + enemy.healthSystem.health);
+                //Console.WriteLine("Health: " + player.healthSystem.health + " Enemy Health: " + enemy.healthSystem.health);
             }
             while (gameOver != false)
             {
@@ -72,16 +70,13 @@ namespace TextBasedRPG
                 Console.ReadKey(true);
                 break;
             }
-
         }
         public void CheckMapSwitch()
         {
             int map2SwitchX = 62;
             int map2SwitchY = 17;
-
             int map3SwitchX = 62;
             int map3SwitchY = 1;
-
             if (map.CurrentMapPath == map.map1 && player.coord2D.x == map2SwitchX && player.coord2D.y == map2SwitchY)
             {
                 player.coord2D.x = 1;

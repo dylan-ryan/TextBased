@@ -13,9 +13,9 @@ namespace TextBasedRPG
         private Enemy enemy;
         private ScaredEnemy scaredEnemy;
         private RandomEnemy randomEnemy;
-        private Sword equippedSword = new Sword();
-        public Shield equippedShield = new Shield();
-        public HealingPotion healingPotion = new HealingPotion();
+        private Sword equippedSword = new Sword(map);
+        public Shield equippedShield = new Shield(map);
+        public HealingPotion healingPotion = new HealingPotion(map);
         bool swordEquipped = false;
         public bool shieldEquipped = false;
 
@@ -30,11 +30,11 @@ namespace TextBasedRPG
 
         public void EquipSword()
         {
-            equippedSword = new Sword();
+            equippedSword = new Sword(map);
         }
         public void EquipShield()
         {
-            equippedShield = new Shield();
+            equippedShield = new Shield(map);
         }
         public void UseHealthPotion()
         {
@@ -378,7 +378,7 @@ namespace TextBasedRPG
             int map3SwitchX = 62;
             int map3SwitchY = 1;
 
-            if (map.CurrentMapPath == map.map1 &&coord2D.x == map2SwitchX && coord2D.y == map2SwitchY)
+            if (map.CurrentMapPath == map.map1 && coord2D.x == map2SwitchX && coord2D.y == map2SwitchY)
             {
                 map.ChangeMap(map.map2);
             }

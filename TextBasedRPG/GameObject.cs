@@ -8,7 +8,7 @@ namespace TextBasedRPG
 {
     internal class GameObject
     {
-        public Map map;
+        static public Map map;
         public Coord2D coord2D;
         public GameObject() 
         {
