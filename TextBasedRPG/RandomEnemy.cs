@@ -11,10 +11,10 @@ namespace TextBasedRPG
 
         public RandomEnemy(Player player, Map map, ItemManager itemManager, int x, int y) : base(map, player)
         {
-            avatar = '%';
+            avatar = Settings.RandomEnemyAvatar;
             blank = ' ';
             this.player = player;
-            healthSystem = new HealthSystem(1);
+            healthSystem = new HealthSystem(Settings.RandomEnemyInitialHealth);
             coord2D = new Coord2D();
             coord2D.x = x;
             coord2D.y = y;

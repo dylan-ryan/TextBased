@@ -11,9 +11,10 @@ namespace TextBasedRPG
         private Player player;
         private Map map;
         private EnemyManager enemyManager;
-        public HealingPotion healingPotion;
         public Shield shield;
         public Sword sword;
+        public HealingPotion healingPotion;
+
         public ItemManager(Player player, Map map, EnemyManager enemyManager)
         {
             this.player = player;
@@ -33,7 +34,8 @@ namespace TextBasedRPG
                     spawnX = random.Next(map.MapRows[0].Length);
                     spawnY = random.Next(map.MapRows.Length);
                 }
-                while (map.map[spawnX, spawnY] == '#');
+                while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
+
                 items.Add(new Sword(player, map, spawnX, spawnY));
             }
         }
@@ -49,7 +51,8 @@ namespace TextBasedRPG
                     spawnX = random.Next(map.MapRows[0].Length);
                     spawnY = random.Next(map.MapRows.Length);
                 }
-                while (map.map[spawnX, spawnY] == '#');
+                while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
+
                 items.Add(new Shield(player, map, spawnX, spawnY));
             }
         }
@@ -66,27 +69,40 @@ namespace TextBasedRPG
                     spawnX = random.Next(map.MapRows[0].Length);
                     spawnY = random.Next(map.MapRows.Length);
                 }
-                while (map.map[spawnX, spawnY] == '#');
-                items.Add(new HealingPotion(player, map, spawnX, spawnY));
+                while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
 
+                items.Add(new HealingPotion(player, map, spawnX, spawnY));
             }
+        }
+
+        private bool ItemExistsAt(int x, int y)
+        {
+            foreach (Item item in items)
+            {
+                if (item.coord2D.x == x && item.coord2D.y == y)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void UpdateItems(ConsoleKeyInfo input)
         {
-            foreach (Item item in items)
+            for (int i = items.Count - 1; i >= 0; i--)
             {
-                item.Update(input);
+                items[i].Update(input);
+                if (items[i].IsDeleted())
+                {
+                    items.RemoveAt(i);
+                }
             }
-            items.RemoveAll(items => items.IsDeleted());
         }
+
         public void PickUp(Item item)
         {
             item.PickUp(player, this);
-            if (item is HealingPotion)
-            {
-                items.Remove(item);
-            }
+            items.Remove(item);
         }
 
         public void DrawItems()

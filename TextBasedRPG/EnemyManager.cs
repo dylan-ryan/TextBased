@@ -35,7 +35,7 @@ namespace TextBasedRPG
                     spawnY = random.Next(map.MapRows.Length);
                 }
                 while (map.map[spawnX, spawnY] == '#');
-                enemies.Add(new NormalEnemy(player, map, spawnX, spawnY));
+                enemies.Add(new NormalEnemy(player, map, itemManager, spawnX, spawnY));
             }
         }
 
@@ -51,7 +51,7 @@ namespace TextBasedRPG
                     spawnY = random.Next(map.MapRows.Length);
                 }
                 while (map.map[spawnX, spawnY] == '#');
-                enemies.Add(new ScaredEnemy(player, map, spawnX, spawnY));
+                enemies.Add(new ScaredEnemy(player, map, itemManager, spawnX, spawnY));
             }
         }
 

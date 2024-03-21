@@ -12,13 +12,11 @@ namespace TextBasedRPG
         public string[] MapRows;
         public char[,] map;
         internal string currentMapPath;
-
         public Map(Player player)
         {
             this.player = player;
             LoadMap(map1);
         }
-
         public string CurrentMapPath
         {
             get { return currentMapPath; }

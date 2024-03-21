@@ -5,50 +5,58 @@ namespace TextBasedRPG
     internal class HUD
     {
         private Player player;
-        private EnemyManager enemyManager;
         private ItemManager itemManager;
-        private Map map; // Add Map reference
-        private Sword sword; // Add Sword reference
-        private HealingPotion healingPotion; // Add HealingPotion reference
-        private Shield shield; // Add Shield reference
+        private Map map;
+        private Item item;
+        private Shield shield;
+        private Sword sword;
+        private HealingPotion healingPotion;
 
-        public HUD(Player player, ItemManager itemManager, EnemyManager enemyManager, Map map, Sword sword, HealingPotion healingPotion, Shield shield) // Update constructor to receive additional parameters
+        public HUD()
+        {
+        }
+
+        public void Display(Player player, ItemManager itemManager, Map map,Shield shield, Sword sword, HealingPotion healingPotion)
         {
             this.player = player;
             this.itemManager = itemManager;
-            this.enemyManager = enemyManager;
-            this.map = map; // Assign Map reference
-            this.sword = sword; // Assign Sword reference
-            this.healingPotion = healingPotion; // Assign HealingPotion reference
-            this.shield = shield; // Assign Shield reference
-        }
+            this.map = map;
+            this.shield = shield;
+            this.sword = sword;
+            this.healingPotion = healingPotion;
 
-        public void Display()
-        {
-            if (map.CurrentMapPath == map.map1)
+            Console.SetCursorPosition(0, 26);
+            Console.WriteLine("                                                                                  ");
+            Console.SetCursorPosition(0, 27);
+            Console.WriteLine("                                                                                  ");
+            Console.SetCursorPosition(0, 26);
+            Console.WriteLine($"Health: {player.healthSystem.health}");
+
+            foreach (Item item in itemManager.Items)
             {
-                Console.SetCursorPosition(0, 26);
-                Console.WriteLine("                                                                                  ");
-                Console.WriteLine($"Health: {player.healthSystem.health} ");
-                if (player.coord2D.y == sword.coord2D.y && player.coord2D.x == sword.coord2D.x)
+                if (player.coord2D.x == item.coord2D.x && player.coord2D.y == item.coord2D.y)
                 {
                     Console.SetCursorPosition(0, 25);
-                    Console.WriteLine("                                                                              ");
-                    Console.WriteLine("You picked up a sword! Damage +1");
-                }
-                if (player.coord2D.y == healingPotion.coord2D.y && player.coord2D.x == healingPotion.coord2D.x)
-                {
-                    Console.SetCursorPosition(0, 25);
-                    Console.WriteLine("                                                                              ");
-                    Console.WriteLine("You picked up a potion! Health +5");
-                }
-                if (player.coord2D.y == shield.coord2D.y && player.coord2D.x == shield.coord2D.x)
-                {
-                    Console.SetCursorPosition(0, 26);
-                    Console.WriteLine("                                                                              ");
-                    Console.WriteLine("You picked up a shield! Enemy damage -1");
+
+                    if (item is Sword)
+                    {
+                        Console.WriteLine("                                                                              ");
+                        Console.WriteLine($"You picked up a sword! Damage +{Settings.SwordDamageBonus}");
+                    }
+                    else if (item is Shield)
+                    {
+                        Console.WriteLine("                                                                              ");
+                        Console.WriteLine($"You picked up a shield! Enemy damage {Settings.ShieldBonus}");
+                    }
+                    else if (item is HealingPotion)
+                    {
+                        Console.WriteLine("                                                                              ");
+                        Console.WriteLine($"You picked up a potion! Health +{Settings.HealingPotionHealAmount}");
+                    }
+                    break;
                 }
             }
         }
+
     }
 }

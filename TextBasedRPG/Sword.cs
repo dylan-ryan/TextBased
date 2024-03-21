@@ -4,13 +4,12 @@ namespace TextBasedRPG
 {
     internal class Sword : Item
     {
-        private static char avatar = '/';
+        private static char avatar = Settings.SwordAvatar;
         private Player player;
-        private int damageBonus = 1;
+        private int damageBonus = Settings.SwordDamageBonus;
         public bool delete = false;
         public Sword(Player player, Map map, int x, int y) : base(map, player)
         {
-            this.player = player;
             coord2D.x = x;
             coord2D.y = y;
         }
@@ -39,14 +38,21 @@ namespace TextBasedRPG
             {
                 if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
                 {
+                    Use(player);
                     delete = true;
+                    itemManager.Items.Remove(this);
                 }
             }
         }
 
+        public void Use(Player player)
+        {
+            player.swordEquipped = true;
+        }
+
         public override bool IsDeleted()
         {
-            return delete = true;
+            return delete;
         }
 
         public override void Draw()

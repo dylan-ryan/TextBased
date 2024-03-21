@@ -4,7 +4,7 @@ namespace TextBasedRPG
 {
     internal class Player : Entity
     {
-        private static char avatar = '@';
+        private static char avatar = Settings.PlayerAvatar;
         private static char blank = ' ';
         private NormalEnemy normalEnemy;
         private ScaredEnemy scaredEnemy;
@@ -21,10 +21,10 @@ namespace TextBasedRPG
         {
             this.itemManager = itemManager;
             this.enemyManager = enemyManager;
-            healthSystem = new HealthSystem(10);
+            healthSystem = new HealthSystem(Settings.PlayerInitialHealth);
             coord2D = new Coord2D();
-            coord2D.y = 10;
-            coord2D.x = 10;
+            coord2D.y = Settings.PlayerInitialY;
+            coord2D.x = Settings.PlayerInitialX;
         }
 
         public void SetPickups(ItemManager itemManager, HealingPotion healingPotion, Shield shield, Sword sword)
@@ -69,55 +69,58 @@ namespace TextBasedRPG
                 newX++;
             }
 
-            bool collidedWithEnemy = false;
-
-            foreach (Enemy enemy in enemyManager.Enemies)
+            if (map.map[newX, newY] != '#')
             {
-                if (newX == enemy.coord2D.x && newY == enemy.coord2D.y && enemy.healthSystem.health > 0)
+                bool collidedWithEnemy = false;
+
+                foreach (Enemy enemy in enemyManager.Enemies)
                 {
-                    enemy.healthSystem.TakeDamage(totalDamage);
-                    collidedWithEnemy = true;
-                    break;
-                }
-            }
-
-            if (!collidedWithEnemy && map.map[newX, newY] != '#')
-            {
-                coord2D.x = newX;
-                coord2D.y = newY;
-            }
-
-            foreach (Item item in itemManager.Items)
-            {
-                if (newX == item.coord2D.x && newY == item.coord2D.y)
-                {
-                    if (item is Sword)
+                    if (newX == enemy.coord2D.x && newY == enemy.coord2D.y && enemy.healthSystem.health > 0)
                     {
-                        swordEquipped = true;
-                        item.PickUp(this,itemManager);
-                        break;
-                    }
-                    else if (item is Shield)
-                    {
-                        shieldEquipped = true;
-                        item.PickUp(this, itemManager);
-                        break;
-                    }
-                    else if (item is HealingPotion)
-                    {
-                        item.PickUp(this, itemManager);
+                        enemy.healthSystem.TakeDamage(totalDamage);
+                        collidedWithEnemy = true;
                         break;
                     }
                 }
-            }
 
-            if (healthSystem.health <= 0)
-            {
-                GameManager.gameOver = true;
-            }
+                if (!collidedWithEnemy)
+                {
+                    coord2D.x = newX;
+                    coord2D.y = newY;
+                }
 
-            Draw();
+                foreach (Item item in itemManager.Items)
+                {
+                    if (newX == item.coord2D.x && newY == item.coord2D.y)
+                    {
+                        if (item is Sword)
+                        {
+                            item.PickUp(this, itemManager);
+                            break;
+                        }
+                        else if (item is Shield)
+                        {
+                            shieldEquipped = true;
+                            item.PickUp(this, itemManager);
+                            break;
+                        }
+                        else if (item is HealingPotion)
+                        {
+                            item.PickUp(this, itemManager);
+                            break;
+                        }
+                    }
+                }
+
+                if (healthSystem.health <= 0)
+                {
+                    GameManager.gameOver = true;
+                }
+
+                Draw();
+            }
         }
+
 
         public void Draw()
         {

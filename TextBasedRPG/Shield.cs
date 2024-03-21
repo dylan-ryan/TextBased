@@ -4,9 +4,9 @@ namespace TextBasedRPG
 {
     internal class Shield : Item
     {
-        private static char avatar = '0';
+        private static char avatar = Settings.ShieldAvatar;
         private Player player;
-        private int shieldBonus = -1;
+        private int shieldBonus = Settings.ShieldBonus;
         public bool delete = false;
 
         public Shield(Player player, Map map, int x, int y) : base(map, player)
@@ -41,15 +41,22 @@ namespace TextBasedRPG
             {
                 if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
                 {
+                    Use(player);
                     delete = true;
+                    itemManager.Items.Remove(this);
                 }
             }
 
         }
 
+        public void Use(Player player)
+        {
+            player.shieldEquipped = true;
+        }
+
         public override bool IsDeleted()
         {
-            return delete = true;
+            return delete;
         }
 
         public override void Draw()

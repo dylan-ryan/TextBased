@@ -4,9 +4,9 @@ namespace TextBasedRPG
 {
     internal class HealingPotion : Item
     {
-        private static char avatar = 'H';
+        private static char avatar = Settings.HealingPotionAvatar;
         private Player player;
-        private int healAmount = 5;
+        private int healAmount = Settings.HealingPotionHealAmount;
         public bool delete = false;
         public HealingPotion(Player player, Map map, int x, int y) : base(map, player)
         {
@@ -20,7 +20,6 @@ namespace TextBasedRPG
                 int top = Math.Min(coord2D.y, Console.BufferHeight - 1);
                 Console.SetCursorPosition(coord2D.x, top);
                 Console.Write(avatar);
-
             }
             else
             {
@@ -47,7 +46,7 @@ namespace TextBasedRPG
         }
         public void Use(Player player)
         {
-            player.healthSystem.health += healAmount; // Heal the player
+            player.healthSystem.health += healAmount;
         }
 
         public override bool IsDeleted()
