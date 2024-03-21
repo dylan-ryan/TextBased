@@ -7,6 +7,7 @@ namespace TextBasedRPG
         protected char avatar;
         protected char blank;
         private Player player;
+        protected HUD hud;
 
         public Item(Map map, Player player)
         {

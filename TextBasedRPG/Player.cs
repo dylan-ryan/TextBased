@@ -14,11 +14,13 @@ namespace TextBasedRPG
         public Sword equippedSword;
         public Shield equippedShield;
         private HealingPotion healingPotion;
+        private HUD hud;
         public bool swordEquipped = false;
         public bool shieldEquipped = false;
 
-        public Player(EnemyManager enemyManager, ItemManager itemManager, Map map)
+        public Player(EnemyManager enemyManager, ItemManager itemManager, Map map, HUD hud)
         {
+            this.hud = hud;
             this.itemManager = itemManager;
             this.enemyManager = enemyManager;
             healthSystem = new HealthSystem(Settings.PlayerInitialHealth);
@@ -27,6 +29,11 @@ namespace TextBasedRPG
             coord2D.x = Settings.PlayerInitialX;
         }
 
+
+        public void SetHUD(HUD hud)
+        {
+            this.hud = hud;
+        }
         public void SetPickups(ItemManager itemManager, HealingPotion healingPotion, Shield shield, Sword sword)
         {
             this.equippedShield = shield;
@@ -107,6 +114,7 @@ namespace TextBasedRPG
                         else if (item is HealingPotion)
                         {
                             item.PickUp(this, itemManager);
+                            
                             break;
                         }
                     }

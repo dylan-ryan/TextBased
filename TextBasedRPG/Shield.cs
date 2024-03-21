@@ -9,7 +9,7 @@ namespace TextBasedRPG
         private int shieldBonus = Settings.ShieldBonus;
         public bool delete = false;
 
-        public Shield(Player player, Map map, int x, int y) : base(map, player)
+        public Shield(Player player, Map map, HUD hud, int x, int y) : base(map, player)
         {
             this.player = player;
             coord2D.x = x;
@@ -48,6 +48,7 @@ namespace TextBasedRPG
             }
 
         }
+
 
         public void Use(Player player)
         {

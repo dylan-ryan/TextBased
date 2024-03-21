@@ -7,6 +7,7 @@ namespace TextBasedRPG
         public static bool gameOver = false;
         public static bool gameWin = false;
         private static ConsoleKeyInfo input;
+        private HUD hud;
         public static Player player;
         public static EnemyManager enemyManager;
         public static ItemManager itemManager;
@@ -14,12 +15,12 @@ namespace TextBasedRPG
         public static Sword sword;
         public static Shield shield;
         public static Map map;
-        private HUD hud;
+        private Item item;
 
         public GameManager()
         {
-            map = new Map(player);
-            player = new Player(enemyManager, itemManager, map);
+            map = new Map(player); // Now it's safe to initialize the Map
+            player = new Player(enemyManager, itemManager, map, hud); // Pass HUD to Player constructor
         }
 
         public void Input()
@@ -32,27 +33,30 @@ namespace TextBasedRPG
             int width = map.MapRows[0].Length;
             int height = map.MapRows.Length;
 
-            itemManager = new ItemManager(player, map, enemyManager);
+            // Initialize ItemManager after HUD
+            itemManager = new ItemManager(player, map, enemyManager, hud);
             enemyManager = new EnemyManager(player, map, itemManager);
 
-            Sword sword = new Sword(player, map, height, width);
-            Shield shield = new Shield(player, map, height, width);
-            HealingPotion healingPotion = new HealingPotion(player, map, height, width);
+            Sword sword = new Sword(player, map, hud, height, width); // Pass HUD to Sword constructor
+            Shield shield = new Shield(player, map, hud, height, width); // Pass HUD to Shield constructor
+            HealingPotion healingPotion = new HealingPotion(player, map, hud, height, width); // Pass HUD to HealingPotion constructor
             ScaredEnemy scaredEnemy = new ScaredEnemy(player, map, itemManager, height, width);
             NormalEnemy normalEnemy = new NormalEnemy(player, map, itemManager, height, width);
             RandomEnemy randomEnemy = new RandomEnemy(player, map, itemManager, height, width);
 
+
             enemyManager.SpawnScaredEnemies(2);
             enemyManager.SpawnRandomEnemies(25);
             enemyManager.SpawnNormalEnemies(2);
-            itemManager.SpawnSword(2);
-            itemManager.SpawnShield(2);
+            itemManager.SpawnSword(1);
+            itemManager.SpawnShield(1);
             itemManager.SpawnHealthPotion(25);
 
-            hud = new HUD();
 
             player.SetPickups(itemManager, healingPotion, shield, sword);
             player.SetEnemy(enemyManager, normalEnemy, scaredEnemy, randomEnemy);
+            
+            hud = new HUD(player,enemyManager,sword,shield); // Initialize HUD first
 
 
             while (!gameOver)
@@ -67,7 +71,7 @@ namespace TextBasedRPG
                 enemyManager.DrawEnemies();
                 player.Draw();
 
-                hud.Display(player, itemManager, map, shield, sword, healingPotion);
+                hud.Display();
 
                 if (player.healthSystem.health <= 0)
                 {

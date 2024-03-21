@@ -8,7 +8,7 @@ namespace TextBasedRPG
         private Player player;
         private int damageBonus = Settings.SwordDamageBonus;
         public bool delete = false;
-        public Sword(Player player, Map map, int x, int y) : base(map, player)
+        public Sword(Player player, Map map, HUD hud, int x, int y) : base(map, player)
         {
             coord2D.x = x;
             coord2D.y = y;
@@ -44,7 +44,6 @@ namespace TextBasedRPG
                 }
             }
         }
-
         public void Use(Player player)
         {
             player.swordEquipped = true;

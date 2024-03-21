@@ -14,9 +14,11 @@ namespace TextBasedRPG
         public Shield shield;
         public Sword sword;
         public HealingPotion healingPotion;
+        public HUD hud;
 
-        public ItemManager(Player player, Map map, EnemyManager enemyManager)
+        public ItemManager(Player player, Map map, EnemyManager enemyManager, HUD hud)
         {
+            this.hud = hud;
             this.player = player;
             this.map = map;
             this.enemyManager = enemyManager;
@@ -36,7 +38,7 @@ namespace TextBasedRPG
                 }
                 while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
 
-                items.Add(new Sword(player, map, spawnX, spawnY));
+                items.Add(new Sword(player, map,hud, spawnX, spawnY));
             }
         }
 
@@ -53,7 +55,7 @@ namespace TextBasedRPG
                 }
                 while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
 
-                items.Add(new Shield(player, map, spawnX, spawnY));
+                items.Add(new Shield(player, map,hud, spawnX, spawnY));
             }
         }
 
@@ -71,7 +73,7 @@ namespace TextBasedRPG
                 }
                 while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
 
-                items.Add(new HealingPotion(player, map, spawnX, spawnY));
+                items.Add(new HealingPotion(player, map,hud, spawnX, spawnY));
             }
         }
 

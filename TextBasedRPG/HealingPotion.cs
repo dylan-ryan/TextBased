@@ -8,8 +8,9 @@ namespace TextBasedRPG
         private Player player;
         private int healAmount = Settings.HealingPotionHealAmount;
         public bool delete = false;
-        public HealingPotion(Player player, Map map, int x, int y) : base(map, player)
+        public HealingPotion(Player player, Map map,HUD hud, int x, int y) : base(map, player)
         {
+            this.hud = hud;
             coord2D.x = x;
             coord2D.y = y;
         }
@@ -38,6 +39,7 @@ namespace TextBasedRPG
             {
                 if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
                 {
+                    
                     Use(player);
                     delete = true;
                     itemManager.Items.Remove(this);
@@ -46,6 +48,7 @@ namespace TextBasedRPG
         }
         public void Use(Player player)
         {
+            
             player.healthSystem.health += healAmount;
         }
 

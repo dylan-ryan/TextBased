@@ -29,6 +29,5 @@
         public static char ShieldAvatar = 'O';
         public static char HealingPotionAvatar = '+';
 
-        // Other settings...
     }
 }
