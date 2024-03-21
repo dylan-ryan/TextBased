@@ -13,7 +13,7 @@ namespace TextBasedRPG
         public string map1 = @"map.txt";
         public string map2 = @"map2.txt";
         public string map3 = @"map3.txt";
-        string[] MapRows;
+        public string[] MapRows;
         public char[,] map;
         internal string currentMapPath;
 

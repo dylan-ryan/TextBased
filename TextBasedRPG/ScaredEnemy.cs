@@ -6,25 +6,27 @@ using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
-    internal class ScaredEnemy : Entity
+    internal class ScaredEnemy : Enemy
     {
-        static char avatar = 'S';
-        static char blank = ' ';
         private Player player;
-        public ScaredEnemy(Player player)
+        public ScaredEnemy(Player player, Map map, int x, int y) : base(map)
         {
+            avatar = 'S';
+            blank = ' ';
             this.player = player;
-            map = new Map(player);
             healthSystem = new HealthSystem(2);
             coord2D = new Coord2D();
-            coord2D.x = 20;
-            coord2D.y = 8;
+            coord2D.x = x;
+            coord2D.y = y;
         }
 
-        public void SimpleAI(ConsoleKeyInfo input)
+        public override void SimpleAI(ConsoleKeyInfo input)
         {
             int playerX = player.coord2D.x;
             int playerY = player.coord2D.y;
+
+            int totalDamage = 1 + (player.shieldEquipped ? player.equippedShield.ShieldBonus : 0);
+
             int newX = coord2D.x;
             int newY = coord2D.y;
             if (healthSystem.health > 0)
@@ -40,7 +42,7 @@ namespace TextBasedRPG
                             newY--;
                             Console.SetCursorPosition(coord2D.x, coord2D.y);
                             Console.Write(avatar);
-                            player.healthSystem.TakeDamage(1);
+                            player.healthSystem.TakeDamage(totalDamage);
                         }
                         else if (newX != playerX || playerY != newY)
                         {
@@ -69,7 +71,7 @@ namespace TextBasedRPG
                             Console.SetCursorPosition(coord2D.x, coord2D.y);
                             Console.Write(avatar);
 
-                            player.healthSystem.TakeDamage(1);
+                            player.healthSystem.TakeDamage(totalDamage);
                         }
                         else if (newX != playerX || playerY != newY)
                         {
@@ -99,7 +101,7 @@ namespace TextBasedRPG
                             Console.SetCursorPosition(coord2D.x, coord2D.y);
                             Console.Write(avatar);
 
-                            player.healthSystem.TakeDamage(1);
+                            player.healthSystem.TakeDamage(totalDamage);
                         }
                         else if (newX != playerX || playerY != newY)
                         {
@@ -128,7 +130,7 @@ namespace TextBasedRPG
                             Console.SetCursorPosition(coord2D.x, coord2D.y);
                             Console.Write(avatar);
 
-                            player.healthSystem.TakeDamage(1);
+                            player.healthSystem.TakeDamage(totalDamage);
                         }
                         else if (newX != playerX || playerY != newY)
                         {
@@ -152,6 +154,12 @@ namespace TextBasedRPG
                     }
                 }
             }
+        }
+
+        public override bool IsDefeated()
+        {
+            
+            return healthSystem.health <= 0;
         }
     }
 }

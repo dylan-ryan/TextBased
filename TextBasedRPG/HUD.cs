@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
@@ -31,43 +27,38 @@ namespace TextBasedRPG
 
         public void Display()
         {
+            Console.SetCursorPosition(0, 26);
+            Console.WriteLine("                                                                                  ");
             if (map.CurrentMapPath == map.map1)
             {
-                Console.SetCursorPosition(0, 19);
-                Console.WriteLine("                                                                          ");
-                Console.WriteLine($"Health: {player.healthSystem.health} Enemy Health: {scaredEnemy.healthSystem.health}");
+                Console.WriteLine($"Health: {player.healthSystem.health} Enemies Combined Health: {scaredEnemy.healthSystem.health}");
                 if (player.coord2D.y == sword.coord2D.y && player.coord2D.x == sword.coord2D.x)
                 {
-                    Console.SetCursorPosition(0, 20);
+                    Console.SetCursorPosition(0, 25);
                     Console.WriteLine("                                                                          ");
                     Console.WriteLine("You picked up a sword! Damage +1");
                 }
             }
-            if (map.CurrentMapPath == map.map2)
+            else if (map.CurrentMapPath == map.map2)
             {
-                    Console.SetCursorPosition(0, 19);
-                    Console.WriteLine("                                                                          ");
-                    Console.WriteLine($"Health: {player.healthSystem.health} Enemy Health: {randomEnemy.healthSystem.health}");
+                Console.WriteLine($"Health: {player.healthSystem.health} Enemy Health: {randomEnemy.healthSystem.health}");
                 if (player.coord2D.y == healingPotion.coord2D.y && player.coord2D.x == healingPotion.coord2D.x)
                 {
-                    Console.SetCursorPosition(0, 20);
+                    Console.SetCursorPosition(0, 25);
                     Console.WriteLine("                                                                          ");
                     Console.WriteLine("You picked up a potion! Health +5");
                 }
             }
-            if (map.CurrentMapPath == map.map3)
+            else if (map.CurrentMapPath == map.map3)
             {
-                    Console.SetCursorPosition(0, 19);
-                    Console.WriteLine("                                                                          ");
-                    Console.WriteLine($"Health: {player.healthSystem.health} Enemy Health: {enemy.healthSystem.health}");
+                Console.WriteLine($"Health: {player.healthSystem.health} Enemy Health: {enemy.healthSystem.health}");
                 if (player.coord2D.y == shield.coord2D.y && player.coord2D.x == shield.coord2D.x)
                 {
-                    Console.SetCursorPosition(0, 20);
+                    Console.SetCursorPosition(0, 26);
                     Console.WriteLine("                                                                          ");
                     Console.WriteLine("You picked up a shield! Enemy damage -1");
                 }
             }
-            
         }
     }
 }

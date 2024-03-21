@@ -2,24 +2,24 @@
 
 namespace TextBasedRPG
 {
-    internal abstract class Enemy : Entity
+    internal abstract class Item : GameObject
     {
         protected char avatar;
         protected char blank;
 
-        public Enemy(Map map)
+        public Item(Map map)
         {
             Item.map = map;
         }
 
-        public abstract void SimpleAI(ConsoleKeyInfo input);
+        public abstract void Update(ConsoleKeyInfo input);
 
-        public abstract bool IsDefeated();
+        public abstract bool IsDeleted();
 
         public virtual void Draw()
         {
             Console.SetCursorPosition(coord2D.x, coord2D.y);
-            Console.Write(IsDefeated() ? blank : avatar);
+            Console.Write(IsDeleted() ? blank : avatar);
         }
     }
 }

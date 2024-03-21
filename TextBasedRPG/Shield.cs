@@ -7,29 +7,30 @@ using System.Threading.Tasks;
 namespace TextBasedRPG
 {
     //Blocks enemy damage-1
-    internal class Shield : GameObject
+    internal class Shield : Item
     {
         private static char avatar = '0';
         private Player player;
         private int shieldBonus = -1;
-        private bool pickedUp = false;
-        bool delete = false;
+        public bool delete = false;
 
-        public Shield(Map map)
+        public Shield(Map map, int x, int y) : base(map)
         {
-            coord2D.y = 4;
-            coord2D.x = 30;
+            coord2D.x = x;
+            coord2D.y = y;
         }
-        public void Update(ConsoleKeyInfo input)
+        public override void Update(ConsoleKeyInfo input)
         {
-            if (delete == false)
+            if (!delete)
             {
-                Console.SetCursorPosition(coord2D.x, coord2D.y);
+                int top = Math.Min(coord2D.y, Console.BufferHeight - 1);
+                Console.SetCursorPosition(coord2D.x, top);
                 Console.Write(avatar);
             }
-            if (delete == true)
+            else
             {
-                Console.SetCursorPosition(coord2D.x, coord2D.y);
+                int top = Math.Min(coord2D.y, Console.BufferHeight - 1);
+                Console.SetCursorPosition(coord2D.x, top);
                 Console.Write(' ');
             }
         }
@@ -40,17 +41,21 @@ namespace TextBasedRPG
 
         public void PickUp(Player player)
         {
-            //new Map(player);
-            if (!pickedUp && map.CurrentMapPath == map.map3)
+            if (!delete)
             {
                 if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
                 {
-                    player.EquipShield();
-                    pickedUp = true;
+                    delete = true;
                 }
             }
 
         }
+
+        public override bool IsDeleted()
+        {
+            return delete = true;
+        }
+
         public static char Avatar => avatar;
     }
 }

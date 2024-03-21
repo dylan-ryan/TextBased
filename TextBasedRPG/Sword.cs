@@ -6,28 +6,29 @@ using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
-    internal class Sword : GameObject
+    internal class Sword : Item
     {
         private static char avatar = '/';
         private Player player;
         private int damageBonus = 1;
-        private bool pickedUp = false;
-        bool delete = false;
-        public Sword(Map map)
+        public bool delete = false;
+        public Sword(Map map, int x, int y) : base(map)
         {
-            coord2D.y = 3;
-            coord2D.x = 6;
+            coord2D.x = x;
+            coord2D.y = y;
         }
-        public void Update(ConsoleKeyInfo input)
+        public override void Update(ConsoleKeyInfo input)
         {
-            if (delete == false)
+            if (!delete)
             {
-                Console.SetCursorPosition(coord2D.x, coord2D.y);
+                int top = Math.Min(coord2D.y, Console.BufferHeight - 1);
+                Console.SetCursorPosition(coord2D.x, top);
                 Console.Write(avatar);
             }
-            if (delete == true)
+            else
             {
-                Console.SetCursorPosition(coord2D.x, coord2D.y);
+                int top = Math.Min(coord2D.y, Console.BufferHeight - 1);
+                Console.SetCursorPosition(coord2D.x, top);
                 Console.Write(' ');
             }
         }
@@ -37,16 +38,20 @@ namespace TextBasedRPG
         }
         public void PickUp(Player player)
         {
-            if (!pickedUp && map.CurrentMapPath == map.map1)
+            if (!delete)
             {
                 if (player.coord2D.y == coord2D.y && player.coord2D.x == coord2D.x)
                 {
-                    player.EquipSword();
                     delete = true;
-                    pickedUp = true;
                 }
             }
         }
+
+        public override bool IsDeleted()
+        {
+            return delete = true;
+        }
+
         public static char Avatar => avatar;
     }
 }

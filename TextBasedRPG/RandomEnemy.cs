@@ -1,67 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
-    internal class RandomEnemy : Entity
+    internal class RandomEnemy : Enemy
     {
-        static char avatar = '%';
-        static char blank = ' ';
         private Player player;
         private bool isSpawned = false;
+        private Random random;
 
-        public bool IsSpawned
+        public RandomEnemy(Player player, Map map, int x, int y) : base(map)
         {
-            get { return isSpawned; }
-        }
-
-        public RandomEnemy(Player player)
-        {
+            avatar = '%';
+            blank = ' ';
             this.player = player;
-            map = new Map(player);
-            healthSystem = new HealthSystem(5);
+            healthSystem = new HealthSystem(1);
             coord2D = new Coord2D();
-            coord2D.x = 59;
-            coord2D.y = 10;
+            coord2D.x = x;
+            coord2D.y = y;
+            random = new Random();
         }
 
-        public void Spawn()
+        public override void SimpleAI(ConsoleKeyInfo input)
         {
-            Console.SetCursorPosition(coord2D.x, coord2D.y);
-            Console.Write(avatar);
             isSpawned = true;
-        }
 
-        public void SimpleAI()
-        {
+            int totalDamage = 1 + (player.shieldEquipped ? player.equippedShield.ShieldBonus : 0);
+
             if (isSpawned && healthSystem.health > 0)
             {
-                int[] directions = { -1, 0, 1, 0, 0, -1, 0, 1 };
-                int randomIndex = new Random().Next(0, directions.Length / 2) * 2;
+                int range = 1;
+                int mapWidth = map.map.GetLength(0);
+                int mapHeight = map.map.GetLength(1);
 
-                int newX = coord2D.x + directions[randomIndex];
-                int newY = coord2D.y + directions[randomIndex + 1];
+                int newX = coord2D.x + random.Next(-range, range + 1);
+                int newY = coord2D.y + random.Next(-range, range + 1);
 
-                if (newX != player.coord2D.x || newY != player.coord2D.y)
+                if (newX >= 0 && newX < mapWidth && newY >= 0 && newY < mapHeight && map.map[newX, newY] != '#')
                 {
-                    if (map.map[newX, newY] != '#')
-                    {
-                        Console.SetCursorPosition(coord2D.x, coord2D.y);
-                        Console.Write(blank);
-                        coord2D.x = newX;
-                        coord2D.y = newY;
-                        Console.SetCursorPosition(coord2D.x, coord2D.y);
-                        Console.Write(avatar);
-                    }
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(blank);
+                    coord2D.x = newX;
+                    coord2D.y = newY;
+                    Console.SetCursorPosition(coord2D.x, coord2D.y);
+                    Console.Write(avatar);
                 }
-                if (newX == player.coord2D.x && newY == player.coord2D.y)
+
+                if (coord2D.x == player.coord2D.x && coord2D.y == player.coord2D.y)
                 {
-                    player.healthSystem.TakeDamage(1);
+                    player.healthSystem.TakeDamage(totalDamage);
                 }
             }
+        }
+
+        public override bool IsDefeated()
+        {
+            return healthSystem.health <= 0;
         }
     }
 }

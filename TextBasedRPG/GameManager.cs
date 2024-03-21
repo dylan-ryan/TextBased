@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
@@ -13,8 +9,11 @@ namespace TextBasedRPG
         private static ConsoleKeyInfo input;
         public static Player player;
         public static Enemy enemy;
-        private static Map map;
+        public static EnemyManager enemyManager;
+        public static ItemManager itemManager;
+        public static Map map = new Map(player);
         HUD hud;
+
         public static void Input()
         {
             input = Console.ReadKey(true);
@@ -22,73 +21,82 @@ namespace TextBasedRPG
 
         public void Play()
         {
-            player = new Player();
-            map = new Map(player);
-            RandomEnemy randomEnemy = new RandomEnemy(player);
-            enemy = new Enemy(player);
-            Sword sword = new Sword(map);
-            ScaredEnemy scaredEnemy = new ScaredEnemy(player);
-            Shield shield = new Shield(map);
-            HealingPotion healingPotion = new HealingPotion(map);
-            hud = new HUD(player, enemy, scaredEnemy,randomEnemy,shield,map,healingPotion,sword);
-            player.SetEnemy(enemy, scaredEnemy, randomEnemy);
+            //map = new Map(player);
+            player = new Player(enemyManager, map);
+            enemyManager = new EnemyManager(player, map);
+            itemManager = new ItemManager(player, map);
+            int width = map.MapRows[0].Length;
+            int height = map.MapRows.Length;
+            RandomEnemy randomEnemy = new RandomEnemy(player, map, height, width);
+            ScaredEnemy scaredEnemy = new ScaredEnemy(player, map, height, width);
+            NormalEnemy normalEnemy = new NormalEnemy(player, map, height, width);
+            Sword sword = new Sword(map, height, width);
+            Shield shield = new Shield(map, height, width);
+            HealingPotion healingPotion = new HealingPotion(map, height, width);
+            hud = new HUD(player, normalEnemy, scaredEnemy, randomEnemy, shield, map, healingPotion, sword);
+            player.SetEnemy(enemyManager, normalEnemy, scaredEnemy, randomEnemy);
+            player.SetPickups(itemManager, healingPotion, shield, sword);
+
+            bool scaredEnemiesSpawned = false;
+            bool randomEnemiesSpawned = false;
+            bool normalEnemiesSpawned = false;
+            bool swordSpawned = false;
+            bool shieldSpawned = false;
+            bool healingSpawned = false;
 
             while (!gameOver)
             {
                 Input();
                 player.MoveTo(input);
-                CheckMapSwitch();
-                if (map.CurrentMapPath == map.map1)
+                enemyManager.UpdateEnemies(input);
+                itemManager.UpdateItems(input);
+
+                enemyManager.DrawEnemies();
+                itemManager.DrawItems();
+
+
+                hud.Display();
+
+     
+
+                if (!scaredEnemiesSpawned)
                 {
-                    scaredEnemy.SimpleAI(input);
-                    sword.Update(input);
-                    hud.Display();
+                    enemyManager.SpawnScaredEnemies(1);
+                    scaredEnemiesSpawned = true;
                 }
-                if (map.CurrentMapPath == map.map2)
+                if (!randomEnemiesSpawned)
                 {
-                    randomEnemy.Spawn();
-                    randomEnemy.SimpleAI();
-                    healingPotion.Update(input);
-                    hud.Display();
+                    enemyManager.SpawnRandomEnemies(25);
+                    randomEnemiesSpawned = true;
                 }
-                if (map.CurrentMapPath == map.map3)
+                if (!normalEnemiesSpawned)
                 {
-                    enemy.SimpleAI(input);
-                    shield.Update(input);
-                    hud.Display();
+                    enemyManager.SpawnNormalEnemies(1);
+                    normalEnemiesSpawned = true;
                 }
-                Console.SetCursorPosition(0, 19);
-                Console.SetCursorPosition(0, 20);
-                //Console.WriteLine("Health: " + player.healthSystem.health + " Enemy Health: " + enemy.healthSystem.health);
+
+                if (!swordSpawned)
+                {
+                    itemManager.SpawnSword(1);
+                    swordSpawned = true;
+                }
+                if (!shieldSpawned)
+                {
+                    itemManager.SpawnShield(1);
+                    shieldSpawned = true;
+                }
+                if (!healingSpawned)
+                {
+                    itemManager.SpawnHealthPotion(25);
+                    healingSpawned = true;
+                }
             }
-            while (gameOver != false)
-            {
-                Console.Clear();
-                Console.WriteLine("Game Over");
-                Console.WriteLine();
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey(true);
-                break;
-            }
-        }
-        public void CheckMapSwitch()
-        {
-            int map2SwitchX = 62;
-            int map2SwitchY = 17;
-            int map3SwitchX = 62;
-            int map3SwitchY = 1;
-            if (map.CurrentMapPath == map.map1 && player.coord2D.x == map2SwitchX && player.coord2D.y == map2SwitchY)
-            {
-                player.coord2D.x = 1;
-                player.coord2D.y = 17;
-                map.ChangeMap(map.map2);
-            }
-            else if (map.CurrentMapPath == map.map2 && player.coord2D.x == map3SwitchX && player.coord2D.y == map3SwitchY)
-            {
-                player.coord2D.x = 1;
-                player.coord2D.y = 1;
-                map.ChangeMap(map.map3);
-            }
+
+            Console.Clear();
+            Console.WriteLine("Game Over");
+            Console.WriteLine();
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey(true);
         }
     }
 }
