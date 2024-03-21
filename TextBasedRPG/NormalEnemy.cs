@@ -34,7 +34,7 @@ namespace TextBasedRPG
             int newX = coord2D.x + deltaX;
             int newY = coord2D.y + deltaY;
 
-            if (map.map[newX, newY] != '#' && (newX != playerX || newY != playerY))
+            if (map.map[newX, newY] != '#' && map.map[newX, newY] != 'L' && (newX != playerX || newY != playerY))
             {
                 Console.SetCursorPosition(coord2D.x, coord2D.y);
                 Console.Write(blank);

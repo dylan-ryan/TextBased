@@ -56,7 +56,7 @@ namespace TextBasedRPG
             int newX = coord2D.x;
             int newY = coord2D.y;
             Console.SetCursorPosition(coord2D.x, coord2D.y);
-            Console.Write(blank);
+            Console.Write(map.map[coord2D.x, coord2D.y]);
             int totalDamage = 1 + (swordEquipped ? equippedSword.DamageBonus : 0);
 
             if (input.Key == ConsoleKey.W || input.Key == ConsoleKey.UpArrow)
@@ -80,54 +80,63 @@ namespace TextBasedRPG
             {
                 bool collidedWithEnemy = false;
 
-                foreach (Enemy enemy in enemyManager.Enemies)
+                if (map.map[newX, newY] == 'L')
                 {
-                    if (newX == enemy.coord2D.x && newY == enemy.coord2D.y && enemy.healthSystem.health > 0)
-                    {
-                        enemy.healthSystem.TakeDamage(totalDamage);
-                        collidedWithEnemy = true;
-                        break;
-                    }
-                }
-
-                if (!collidedWithEnemy)
-                {
+                    healthSystem.TakeDamage(5);
                     coord2D.x = newX;
                     coord2D.y = newY;
                 }
-
-                foreach (Item item in itemManager.Items)
+                else
                 {
-                    if (newX == item.coord2D.x && newY == item.coord2D.y)
+                    foreach (Enemy enemy in enemyManager.Enemies)
                     {
-                        if (item is Sword)
+                        if (newX == enemy.coord2D.x && newY == enemy.coord2D.y && enemy.healthSystem.health > 0)
                         {
-                            item.PickUp(this, itemManager);
-                            break;
-                        }
-                        else if (item is Shield)
-                        {
-                            shieldEquipped = true;
-                            item.PickUp(this, itemManager);
-                            break;
-                        }
-                        else if (item is HealingPotion)
-                        {
-                            item.PickUp(this, itemManager);
-                            
+                            enemy.healthSystem.TakeDamage(totalDamage);
+                            collidedWithEnemy = true;
                             break;
                         }
                     }
-                }
 
-                if (healthSystem.health <= 0)
-                {
-                    GameManager.gameOver = true;
-                }
+                    if (!collidedWithEnemy)
+                    {
+                        coord2D.x = newX;
+                        coord2D.y = newY;
+                    }
 
-                Draw();
+                    foreach (Item item in itemManager.Items)
+                    {
+                        if (newX == item.coord2D.x && newY == item.coord2D.y)
+                        {
+                            if (item is Sword)
+                            {
+                                item.PickUp(this, itemManager);
+                                break;
+                            }
+                            else if (item is Shield)
+                            {
+                                shieldEquipped = true;
+                                item.PickUp(this, itemManager);
+                                break;
+                            }
+                            else if (item is HealingPotion)
+                            {
+                                item.PickUp(this, itemManager);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (healthSystem.health <= 0)
+                    {
+                        GameManager.gameOver = true;
+                    }
+
+                    Draw();
+                }
             }
         }
+
 
 
         public void Draw()

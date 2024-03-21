@@ -38,7 +38,7 @@ namespace TextBasedRPG
             if (ItemExistsAt(newX, newY))
                 return;
 
-            if (map.map[newX, newY] != '#')
+            if (map.map[newX, newY] != '#' && map.map[newX, newY] != 'L')
             {
                 Console.SetCursorPosition(coord2D.x, coord2D.y);
                 Console.Write(blank);

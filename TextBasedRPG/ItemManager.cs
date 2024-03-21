@@ -36,9 +36,9 @@ namespace TextBasedRPG
                     spawnX = random.Next(map.MapRows[0].Length);
                     spawnY = random.Next(map.MapRows.Length);
                 }
-                while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
+                while (map.map[spawnX, spawnY] == '#' || map.map[spawnX, spawnY] == 'L' || ItemExistsAt(spawnX, spawnY));
 
-                items.Add(new Sword(player, map,hud, spawnX, spawnY));
+                items.Add(new Sword(player, map, hud, spawnX, spawnY));
             }
         }
 
@@ -53,9 +53,9 @@ namespace TextBasedRPG
                     spawnX = random.Next(map.MapRows[0].Length);
                     spawnY = random.Next(map.MapRows.Length);
                 }
-                while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
+                while (map.map[spawnX, spawnY] == '#' || map.map[spawnX, spawnY] == 'L' || ItemExistsAt(spawnX, spawnY));
 
-                items.Add(new Shield(player, map,hud, spawnX, spawnY));
+                items.Add(new Shield(player, map, hud, spawnX, spawnY));
             }
         }
 
@@ -71,9 +71,9 @@ namespace TextBasedRPG
                     spawnX = random.Next(map.MapRows[0].Length);
                     spawnY = random.Next(map.MapRows.Length);
                 }
-                while (map.map[spawnX, spawnY] == '#' || ItemExistsAt(spawnX, spawnY));
+                while (map.map[spawnX, spawnY] == '#' || map.map[spawnX, spawnY] == 'L' || ItemExistsAt(spawnX, spawnY));
 
-                items.Add(new HealingPotion(player, map,hud, spawnX, spawnY));
+                items.Add(new HealingPotion(player, map, hud, spawnX, spawnY));
             }
         }
 

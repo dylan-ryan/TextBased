@@ -40,10 +40,33 @@ namespace TextBasedRPG
                 for (int x = 0; x < width; x++)
                 {
                     map[x, y] = MapRows[y][x];
-                    Console.Write(map[x, y]);
+
+                    char mapChar = MapRows[y][x];
+
+                    switch (mapChar)
+                    {
+                        case '#':
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.BackgroundColor = ConsoleColor.Gray;
+                            break;
+                        case 'L':
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            break;
+                        default:
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.BackgroundColor = ConsoleColor.Black;
+                            break;
+                    }
+                    Console.Write(mapChar);
+
                 }
                 Console.WriteLine();
             }
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+
             currentMapPath = mapPath;
         }
     }

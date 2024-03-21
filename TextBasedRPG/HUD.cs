@@ -20,20 +20,35 @@ namespace TextBasedRPG
         public void Display()
         {
             Console.SetCursorPosition(0, 25);
-            Console.WriteLine("Player Health: " + player.healthSystem.health);
-            Console.WriteLine("Enemies Remaining: " + enemyManager.Enemies.Count);
+            Console.Write("Player Health: ");
+            if (player.healthSystem.health < 10)
+            {
+                Console.Write(" ");
+            }
+            Console.WriteLine(player.healthSystem.health);
+            Console.SetCursorPosition(0, 26);
+            Console.Write("Enemies Remaining: ");
+            if (enemyManager.Enemies.Count < 10)
+            {
+
+                Console.Write(" ");
+            }
+            Console.WriteLine(enemyManager.Enemies.Count);
 
             if (player.swordEquipped)
             {
+                Console.SetCursorPosition(0, 27);
                 Console.WriteLine("Sword Collected: Damage +" + sword.DamageBonus);
             }
 
             if (player.shieldEquipped)
             {
-                Console.WriteLine("Shield Collected: Damage " + shield.ShieldBonus);
+                Console.SetCursorPosition(0, 28);
+                Console.WriteLine("Shield Collected: Enemy Damage " + shield.ShieldBonus);
             }
 
             Console.SetCursorPosition(0, 0);
         }
+
     }
 }
