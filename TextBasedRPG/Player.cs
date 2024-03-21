@@ -9,6 +9,7 @@ namespace TextBasedRPG
         private NormalEnemy normalEnemy;
         private ScaredEnemy scaredEnemy;
         private RandomEnemy randomEnemy;
+        private ItemManager itemManager;
         private EnemyManager enemyManager;
         public Sword equippedSword;
         public Shield equippedShield;
@@ -16,8 +17,9 @@ namespace TextBasedRPG
         public bool swordEquipped = false;
         public bool shieldEquipped = false;
 
-        public Player(EnemyManager enemyManager, Map map)
+        public Player(EnemyManager enemyManager, ItemManager itemManager, Map map)
         {
+            this.itemManager = itemManager;
             this.enemyManager = enemyManager;
             healthSystem = new HealthSystem(10);
             coord2D = new Coord2D();
@@ -25,16 +27,12 @@ namespace TextBasedRPG
             coord2D.x = 10;
         }
 
-        public void UseHealthPotion()
-        {
-            healthSystem.health += healingPotion.HealAmount;
-        }
-
         public void SetPickups(ItemManager itemManager, HealingPotion healingPotion, Shield shield, Sword sword)
         {
             this.equippedShield = shield;
             this.healingPotion = healingPotion;
             this.equippedSword = sword;
+            this.itemManager = itemManager;
         }
 
         public void SetEnemy(EnemyManager enemyManager, NormalEnemy normalEnemy, ScaredEnemy scaredEnemy, RandomEnemy randomEnemy)
@@ -70,6 +68,7 @@ namespace TextBasedRPG
             {
                 newX++;
             }
+
             bool collidedWithEnemy = false;
 
             foreach (Enemy enemy in enemyManager.Enemies)
@@ -86,24 +85,29 @@ namespace TextBasedRPG
             {
                 coord2D.x = newX;
                 coord2D.y = newY;
+            }
 
-                if (coord2D.x == equippedSword.coord2D.x && coord2D.y == equippedSword.coord2D.y)
+            foreach (Item item in itemManager.Items)
+            {
+                if (newX == item.coord2D.x && newY == item.coord2D.y)
                 {
-                    swordEquipped = true;
-                    equippedSword.PickUp(this);
-                    equippedSword.delete = true;
-                }
-                if (coord2D.x == healingPotion.coord2D.x && coord2D.y == healingPotion.coord2D.y)
-                {
-                    UseHealthPotion();
-                    healingPotion.PickUp(this);
-                    healingPotion.delete = true;
-                }
-                if (coord2D.x == equippedShield.coord2D.x && coord2D.y == equippedShield.coord2D.y)
-                {
-                    shieldEquipped = true;
-                    equippedShield.PickUp(this);
-                    equippedShield.delete = true;
+                    if (item is Sword)
+                    {
+                        swordEquipped = true;
+                        item.PickUp(this,itemManager);
+                        break;
+                    }
+                    else if (item is Shield)
+                    {
+                        shieldEquipped = true;
+                        item.PickUp(this, itemManager);
+                        break;
+                    }
+                    else if (item is HealingPotion)
+                    {
+                        item.PickUp(this, itemManager);
+                        break;
+                    }
                 }
             }
 
@@ -112,11 +116,13 @@ namespace TextBasedRPG
                 GameManager.gameOver = true;
             }
 
+            Draw();
+        }
+
+        public void Draw()
+        {
             Console.SetCursorPosition(coord2D.x, coord2D.y);
             Console.Write(avatar);
         }
-
-       
-        
     }
 }

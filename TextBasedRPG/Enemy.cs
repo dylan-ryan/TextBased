@@ -6,20 +6,20 @@ namespace TextBasedRPG
     {
         protected char avatar;
         protected char blank;
+        private Player player;
 
-        public Enemy(Map map)
+        public Enemy(Map map, Player player)
         {
             Item.map = map;
+            this.player = player;
         }
+
 
         public abstract void SimpleAI(ConsoleKeyInfo input);
 
         public abstract bool IsDefeated();
 
-        public virtual void Draw()
-        {
-            Console.SetCursorPosition(coord2D.x, coord2D.y);
-            Console.Write(IsDefeated() ? blank : avatar);
-        }
+        public abstract void Draw();
+
     }
 }

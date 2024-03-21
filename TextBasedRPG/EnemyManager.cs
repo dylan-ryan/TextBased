@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
@@ -13,11 +10,16 @@ namespace TextBasedRPG
         private List<Enemy> enemies;
         private Player player;
         private Map map;
+        private ItemManager itemManager;
+        public NormalEnemy normalEnemy;
+        public ScaredEnemy scaredEnemy;
+        public RandomEnemy randomEnemy;
 
-        public EnemyManager(Player player, Map map)
+        public EnemyManager(Player player, Map map, ItemManager itemManager)
         {
             this.player = player;
             this.map = map;
+            this.itemManager = itemManager;
             enemies = new List<Enemy>();
         }
 
@@ -64,9 +66,9 @@ namespace TextBasedRPG
                 {
                     spawnX = random.Next(map.MapRows[0].Length);
                     spawnY = random.Next(map.MapRows.Length);
-                } 
+                }
                 while (map.map[spawnX, spawnY] == '#');
-                enemies.Add(new RandomEnemy(player, map, spawnX, spawnY));
+                enemies.Add(new RandomEnemy(player, map, itemManager, spawnX, spawnY));
             }
         }
 

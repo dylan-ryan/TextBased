@@ -6,20 +6,21 @@ namespace TextBasedRPG
     {
         protected char avatar;
         protected char blank;
+        private Player player;
 
-        public Item(Map map)
+        public Item(Map map, Player player)
         {
             Item.map = map;
+            this.player = player;
         }
+
+        public abstract void PickUp(Player player, ItemManager itemManager);
 
         public abstract void Update(ConsoleKeyInfo input);
 
         public abstract bool IsDeleted();
 
-        public virtual void Draw()
-        {
-            Console.SetCursorPosition(coord2D.x, coord2D.y);
-            Console.Write(IsDeleted() ? blank : avatar);
-        }
+        public abstract void Draw();
+
     }
 }

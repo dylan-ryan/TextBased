@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
     internal class NormalEnemy : Enemy
-    { 
-    private Player player;
-        public NormalEnemy(Player player, Map map, int x, int y) : base(map)
+    {
+        private Player player;
+
+        public NormalEnemy(Player player, Map map, int x, int y) : base(map, player)
         {
             avatar = '$';
             blank = ' ';
@@ -41,8 +38,6 @@ namespace TextBasedRPG
                 Console.Write(blank);
                 coord2D.x = newX;
                 coord2D.y = newY;
-                Console.SetCursorPosition(coord2D.x, coord2D.y);
-                Console.Write(avatar);
             }
             else
             {
@@ -55,9 +50,11 @@ namespace TextBasedRPG
         {
             return healthSystem.health <= 0;
         }
+
+        public override void Draw()
+        {
+            Console.SetCursorPosition(coord2D.x, coord2D.y);
+            Console.Write(avatar);
+        }
     }
-
-
 }
-
-

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TextBasedRPG
 {
@@ -13,11 +10,15 @@ namespace TextBasedRPG
         private List<Item> items;
         private Player player;
         private Map map;
-
-        public ItemManager(Player player, Map map)
+        private EnemyManager enemyManager;
+        public HealingPotion healingPotion;
+        public Shield shield;
+        public Sword sword;
+        public ItemManager(Player player, Map map, EnemyManager enemyManager)
         {
             this.player = player;
             this.map = map;
+            this.enemyManager = enemyManager;
             items = new List<Item>();
         }
 
@@ -33,7 +34,7 @@ namespace TextBasedRPG
                     spawnY = random.Next(map.MapRows.Length);
                 }
                 while (map.map[spawnX, spawnY] == '#');
-                items.Add(new Sword(map, spawnX, spawnY));
+                items.Add(new Sword(player, map, spawnX, spawnY));
             }
         }
 
@@ -49,7 +50,7 @@ namespace TextBasedRPG
                     spawnY = random.Next(map.MapRows.Length);
                 }
                 while (map.map[spawnX, spawnY] == '#');
-                items.Add(new Shield(map, spawnX, spawnY));
+                items.Add(new Shield(player, map, spawnX, spawnY));
             }
         }
 
@@ -66,7 +67,8 @@ namespace TextBasedRPG
                     spawnY = random.Next(map.MapRows.Length);
                 }
                 while (map.map[spawnX, spawnY] == '#');
-                items.Add(new HealingPotion(map, spawnX, spawnY));
+                items.Add(new HealingPotion(player, map, spawnX, spawnY));
+
             }
         }
 
@@ -77,6 +79,14 @@ namespace TextBasedRPG
                 item.Update(input);
             }
             items.RemoveAll(items => items.IsDeleted());
+        }
+        public void PickUp(Item item)
+        {
+            item.PickUp(player, this);
+            if (item is HealingPotion)
+            {
+                items.Remove(item);
+            }
         }
 
         public void DrawItems()
